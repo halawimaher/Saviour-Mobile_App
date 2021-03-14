@@ -3,11 +3,16 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Login from './Screens/Login'
 import Register from './Screens/Register'
+import RequestorProfileCompletion from './Screens/RequestorProfileCompletion'
+import ProviderProfileCompletion from './Screens/ProviderProfileCompletion'
+import RequestorProfile from './Screens/RequestorProfile'
+import ProviderProfile from './Screens/ProviderProfile'
+import Constants from 'expo-constants'
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Login />
+      <RequestorProfileCompletion />
       <StatusBar style="auto" />
     </View>
   );
@@ -19,5 +24,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    // marginTop: Constants.statusBarHeight,
   },
 });

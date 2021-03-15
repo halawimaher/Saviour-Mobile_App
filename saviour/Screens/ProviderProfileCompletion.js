@@ -58,7 +58,7 @@ function ProviderProfileCompletion() {
                     keyboardType={'numeric'}
                />
                <View style={styles.text}>
-                    <Text style={styles.paragraph}><Text style={styles.primaryText}>Final Verification Step</Text> To get verified and have your profile appear to other clients, please upload an image of your passport’s first page (Aplicatble to non-Lebanese persons)</Text>
+                    <Text style={styles.paragraph}><Text style={styles.primaryText}>Final Verification Step</Text> To get verified and have your profile appear to other clients, please upload an image of your passport’s first page (Applicatble to non-Lebanese persons)</Text>
                </View>
                <TouchableOpacity
                     style={styles.button}

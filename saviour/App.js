@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Login from './Screens/Login'
 import Register from './Screens/Register'
+import Map from './Screens/Map'
 import RequestorProfileCompletion from './Screens/RequestorProfileCompletion'
 import ProviderProfileCompletion from './Screens/ProviderProfileCompletion'
 import RequestorProfile from './Screens/RequestorProfile'
@@ -12,7 +13,7 @@ import Constants from 'expo-constants'
 export default function App() {
   return (
     <View style={styles.container}>
-      <RequestorProfileCompletion />
+      <ProviderProfile />
       <StatusBar style="auto" />
     </View>
   );

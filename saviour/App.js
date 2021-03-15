@@ -3,11 +3,12 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Login from './Screens/Login'
 import Register from './Screens/Register'
+import Map from './Screens/Map'
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Login />
+      <Map />
       <StatusBar style="auto" />
     </View>
   );

@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import Checkbox from 'expo-checkbox';
-import { Image, Alert, Button, TextInput, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { FlatList, Image, Alert, Button, TextInput, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { ScrollView } from 'react-native';
 
 export default function Register() {
      const [isChecked, setChecked] = useState(false);
 
      return (
-          <View style={styles.container}>
+          <ScrollView style={styles.wrapper}>
                <Text style={styles.logoText}> <Text style={{ color: '#00C2FF' }}>S</Text>aviour</Text>
                <TextInput
                     // value={this.state.username}
@@ -18,21 +19,20 @@ export default function Register() {
                     // value={this.state.password}
                     // onChangeText={(password) => this.setState({ password })}
                     placeholder={'City'}
-                    secureTextEntry={true}
                     style={styles.input}
                />
                <TextInput
                     // value={this.state.password}
                     // onChangeText={(password) => this.setState({ password })}
                     placeholder={'Phone'}
-                    secureTextEntry={true}
                     style={styles.input}
+                    numeric
+                    keyboardType={'numeric'}
                />
                <TextInput
                     // value={this.state.password}
                     // onChangeText={(password) => this.setState({ password })}
                     placeholder={'Email'}
-                    secureTextEntry={true}
                     style={styles.input}
                />
                <TextInput
@@ -58,15 +58,15 @@ export default function Register() {
                </TouchableOpacity>
 
                <Text style={styles.promptText}>Already Have an Account?<Text style={{ color: '#00C2FF' }}> Sign In!</Text></Text>
-          </View >
+          </ScrollView >
      );
 }
 
 const styles = StyleSheet.create({
-     container: {
+     wrapper: {
           flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
+          width: 'auto',
+          padding: 45
      },
      logo: {
           width: 350,
@@ -86,20 +86,21 @@ const styles = StyleSheet.create({
      },
      button: {
           borderRadius: 40,
-          width: 135,
+          width: 165,
           height: 44,
           backgroundColor: '#00C2FF',
-          margin: 20,
+          marginLeft: 40,
      },
      buttonText: {
           paddingTop: 10,
           textAlign: 'center',
-          fontSize: 16,
+          fontSize: 14,
           fontWeight: 'bold',
           color: '#fff',
      },
      promptText: {
-          fontSize: 20,
+          paddingTop: 30,
+          fontSize: 16,
      },
      section: {
           flexDirection: 'row',

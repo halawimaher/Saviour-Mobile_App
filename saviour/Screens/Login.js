@@ -6,21 +6,21 @@ import { AuthContext } from '../components/Context'
 export default function Login({ navigation }) {
 
      const [data, setData] = useState({
-          name: '',
+          userName: '',
           email: '',
-          password: ''
+          password: '',
      })
 
      const { signIn } = useContext(AuthContext)
 
-     const nameInputChange = (val) => {
-          if (val.length != 0) {
-               setData({
-                    ...data,
-                    name: val,
-               })
-          }
-     }
+     // const userNameInputChange = (val) => {
+     //      if (val.length != 0) {
+     //           setData({
+     //                ...data,
+     //                userName: val,
+     //           })
+     //      }
+     // }
      const emailInputChange = (val) => {
           if (val.length != 0) {
                setData({
@@ -38,15 +38,19 @@ export default function Login({ navigation }) {
           }
      }
 
+     const loginHandle = (userName, email, password) => {
+          signIn(userName, email, password)
+     }
+
      return (
           <View style={styles.container}>
                <Image style={styles.logo} source={logo} />
                <Text style={styles.logoText}> <Text style={{ color: '#00C2FF' }}>S</Text>aviour</Text>
-               <TextInput
-                    onChangeText={(val) => nameInputChange(val)}
+               {/* <TextInput
+                    onChangeText={(val) => userNameInputChange(val)}
                     placeholder={'Name'}
                     style={styles.input}
-               />
+               /> */}
                <TextInput
                     onChangeText={(val) => emailInputChange(val)}
                     placeholder={'Email'}
@@ -64,7 +68,7 @@ export default function Login({ navigation }) {
                </View>
                <TouchableOpacity
                     style={styles.button}
-                    onPress={() => { signIn() }}
+                    onPress={() => { loginHandle(data.userName, data.email, data.password) }}
                ><Text style={styles.buttonText}>Login</Text>
                </TouchableOpacity>
 
@@ -82,7 +86,7 @@ const styles = StyleSheet.create({
      },
      logo: {
           width: 350,
-          height: 200,
+          height: 150,
      },
      logoText: {
           fontSize: 64,
@@ -117,6 +121,6 @@ const styles = StyleSheet.create({
           paddingTop: 0
      },
      promptText: {
-          fontSize: 20,
+          fontSize: 16,
      }
 });

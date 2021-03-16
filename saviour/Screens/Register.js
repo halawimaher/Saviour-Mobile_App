@@ -10,38 +10,38 @@ export default function Register({ navigation }) {
      const { signUp } = useContext(AuthContext);
 
      const [data, setData] = useState({
-          name: '',
-          city: '',
-          phone: '',
+          userName: '',
+          // city: '',
+          // phone: '',
           email: '',
           password: ''
      })
 
-     const nameInputChange = (val) => {
+     const newNameInputChange = (val) => {
           if (val.length != 0) {
                setData({
                     ...data,
-                    name: val,
+                    userName: val,
                })
           }
      }
-     const cityInputChange = (val) => {
-          if (val.length != 0) {
-               setData({
-                    ...data,
-                    city: val,
-               })
-          }
-     }
-     const phoneInputChange = (val) => {
-          if (val.length != 0) {
-               setData({
-                    ...data,
-                    phone: val,
-               })
-          }
-     }
-     const emailInputChange = (val) => {
+     // const cityInputChange = (val) => {
+     //      if (val.length != 0) {
+     //           setData({
+     //                ...data,
+     //                city: val,
+     //           })
+     //      }
+     // }
+     // const phoneInputChange = (val) => {
+     //      if (val.length != 0) {
+     //           setData({
+     //                ...data,
+     //                phone: val,
+     //           })
+     //      }
+     // }
+     const newEmailInputChange = (val) => {
           if (val.length != 0) {
                setData({
                     ...data,
@@ -49,7 +49,7 @@ export default function Register({ navigation }) {
                })
           }
      }
-     const passInputChange = (val) => {
+     const newPassInputChange = (val) => {
           if (val.length != 0) {
                setData({
                     ...data,
@@ -58,49 +58,53 @@ export default function Register({ navigation }) {
           }
      }
 
+     const registerHandle = (userName, email, password) => {
+          signUp(userName, email, password)
+     }
+
      return (
           <ScrollView style={styles.wrapper}>
                <Text style={styles.logoText}> <Text style={{ color: '#00C2FF' }}>S</Text>aviour</Text>
                <TextInput
-                    onChangeText={(val) => nameInputChange(val)}
+                    onChangeText={(val) => newNameInputChange(val)}
                     placeholder={'Name'}
                     style={styles.input}
                />
-               <TextInput
+               {/* <TextInput
                     onChangeText={(val) => cityInputChange(val)}
                     placeholder={'City'}
                     style={styles.input}
-               />
-               <TextInput
+               /> */}
+               {/* <TextInput
                     onChangeText={(val) => phoneInputChange(val)}
                     placeholder={'Phone'}
                     style={styles.input}
                     numeric
                     keyboardType={'numeric'}
-               />
+               /> */}
                <TextInput
-                    onChangeText={(val) => emailInputChange(val)}
+                    onChangeText={(val) => newEmailInputChange(val)}
                     placeholder={'Email'}
                     style={styles.input}
                />
                <TextInput
-                    onChangeText={(val) => passInputChange(val)}
+                    onChangeText={(val) => newPassInputChange(val)}
                     placeholder={'Password'}
                     secureTextEntry={true}
                     style={styles.input}
                />
 
-               <View style={styles.section}>
+               {/* <View style={styles.section}>
                     <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
                     <Text style={styles.paragraph}>Requestor</Text>
                     <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
                     <Text style={styles.paragraph}>Provider</Text>
-               </View>
+               </View> */}
 
 
                <TouchableOpacity
                     style={styles.button}
-                    onPress={() => signUp()}
+                    onPress={() => registerHandle(data.userName, data.email, data.password)}
                ><Text style={styles.buttonText}>Create Account</Text>
                </TouchableOpacity>
 
@@ -128,7 +132,7 @@ const styles = StyleSheet.create({
           padding: 10,
           borderWidth: 1,
           borderColor: 'black',
-          marginBottom: 10,
+          marginBottom: 20,
           borderRadius: 40
      },
      button: {
@@ -146,7 +150,7 @@ const styles = StyleSheet.create({
           color: '#fff',
      },
      promptText: {
-          paddingTop: 30,
+          paddingTop: 50,
           fontSize: 16,
      },
      section: {
@@ -155,6 +159,7 @@ const styles = StyleSheet.create({
      },
      paragraph: {
           fontSize: 15,
+
      },
      checkbox: {
           margin: 8,

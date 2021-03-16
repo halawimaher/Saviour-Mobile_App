@@ -1,12 +1,21 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { View, StyleSheet, Text, Platform, StatusBar, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { useFonts, RhodiumLibre_400Regular } from '@expo-google-fonts/rhodium-libre';
+import AppLoading from 'expo-app-loading';
 import * as ImagePicker from 'expo-image-picker'
 import { Ionicons } from '@expo/vector-icons';
 import { Avatar } from "react-native-elements";
 import Constants from 'expo-constants'
+import { AuthContext } from '../components/Context'
 
 function ProviderProfile() {
      const [image, setImage] = useState(null)
+
+     const { signOut } = useContext(AuthContext)
+
+     let [fontsLoaded] = useFonts({
+          RhodiumLibre_400Regular,
+     });
 
      useEffect(() => {
           async function doSomething() {
@@ -32,48 +41,52 @@ function ProviderProfile() {
                setImage(result.uri)
           }
      }
-     return (
-          <ScrollView style={styles.wrapper}>
-               <View style={styles.welcomeMessage}>
-                    <Text style={styles.paragraph}>Hello <Text style={styles.primaryText}>Jane</Text> </Text>
-                    <Text style={styles.logOut}>Log Out</Text>
-               </View>
-               <View style={styles.imagePicker}>
-                    {!image ? <Avatar
-                         size={200}
-                         icon={{ name: 'user', color: 'orange', type: 'font-awesome' }}
-                         overlayContainerStyle={{ backgroundColor: 'white', borderRadius: 100 }}
-                         activeOpacity={0.7}
-                         containerStyle={{ borderWidth: 5, borderRadius: 100 }}
-                    />
-                         :
-                         <Image source={{ uri: image }} style={styles.image} />}
-                    <TouchableOpacity style={styles.imageButton} onPress={PickImage}>
-                         <Ionicons name="camera" size={46} color='#00C2FF' />
-                    </TouchableOpacity>
-                    <StatusBar style='auto' />
-               </View>
-               <View style={styles.buttonGrid}>
-                    <TouchableOpacity
-                         style={styles.button}
-                    // onPress={e.preventDefault()}
-                    ><Text style={styles.buttonText}>Book an Appointment</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                         style={styles.button}
-                    // onPress={e.preventDefault()}
-                    ><Text style={styles.buttonText}>Change Location</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                         style={styles.button}
-                    // onPress={e.preventDefault()}
-                    ><Text style={styles.buttonText}>See Your Reviews</Text>
-                    </TouchableOpacity>
-               </View>
-          </ScrollView>
-     )
-}
 
+     if (!fontsLoaded) {
+          return <AppLoading />;
+     } else {
+          return (
+               <ScrollView style={styles.wrapper}>
+                    <View style={styles.welcomeMessage}>
+                         <Text style={styles.paragraph}>Hello <Text style={styles.primaryText}>Jane</Text> </Text>
+                         <Text style={styles.logOut} onPress={() => { signOut() }}>Log Out</Text>
+                    </View>
+                    <View style={styles.imagePicker}>
+                         {!image ? <Avatar
+                              size={200}
+                              icon={{ name: 'user', color: 'grey', type: 'font-awesome' }}
+                              overlayContainerStyle={{ backgroundColor: 'white', borderRadius: 100 }}
+                              activeOpacity={0.7}
+                              containerStyle={{ borderWidth: 5, borderRadius: 100 }}
+                         />
+                              :
+                              <Image source={{ uri: image }} style={styles.image} />}
+                         <TouchableOpacity style={styles.imageButton} onPress={PickImage}>
+                              <Ionicons name="camera" size={46} color='orange' />
+                         </TouchableOpacity>
+                         <StatusBar style='auto' />
+                    </View>
+                    <View style={styles.buttonGrid}>
+                         <TouchableOpacity
+                              style={styles.button}
+                         // onPress={e.preventDefault()}
+                         ><Text style={styles.buttonText}>Edit Working Hours</Text>
+                         </TouchableOpacity>
+                         <TouchableOpacity
+                              style={styles.button}
+                         // onPress={e.preventDefault()}
+                         ><Text style={styles.buttonText}>Change Location</Text>
+                         </TouchableOpacity>
+                         <TouchableOpacity
+                              style={styles.button}
+                         // onPress={e.preventDefault()}
+                         ><Text style={styles.buttonText}>See Your Reviews</Text>
+                         </TouchableOpacity>
+                    </View>
+               </ScrollView>
+          )
+     }
+}
 const styles = StyleSheet.create({
      wrapper: {
           width: 350,
@@ -85,21 +98,24 @@ const styles = StyleSheet.create({
           flex: 1,
           flexDirection: 'row',
           alignContent: 'flex-start',
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
+          fontFamily: 'RhodiumLibre_400Regular'
      },
      logOut: {
           color: '#00C2FF',
           fontSize: 16,
-          alignSelf: 'center'
+          alignSelf: 'center',
+          fontFamily: 'RhodiumLibre_400Regular'
      },
      paragraph: {
           paddingBottom: 10,
-          fontWeight: 'bold',
-          fontSize: 40
+          fontSize: 40,
+          fontFamily: 'RhodiumLibre_400Regular'
      },
      primaryText: {
           color: '#00C2FF',
-          fontSize: 40
+          fontSize: 40,
+          fontFamily: 'RhodiumLibre_400Regular'
      },
      imagePicker: {
           flex: 1,
@@ -120,7 +136,7 @@ const styles = StyleSheet.create({
           width: 55,
           height: 55,
           borderWidth: 4,
-          borderColor: '#00C2FF',
+          borderColor: 'orange',
           borderRadius: 40,
      },
      buttonGrid: {
@@ -140,8 +156,8 @@ const styles = StyleSheet.create({
           paddingTop: 10,
           textAlign: 'center',
           fontSize: 16,
-          fontWeight: 'bold',
           color: '#fff',
+          fontFamily: 'RhodiumLibre_400Regular'
      },
 })
 

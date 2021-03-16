@@ -1,43 +1,90 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Checkbox from 'expo-checkbox';
 import { FlatList, Image, Alert, Button, TextInput, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native';
+import { AuthContext } from '../components/Context';
 
-export default function Register() {
+export default function Register({ navigation }) {
      const [isChecked, setChecked] = useState(false);
+
+     const { signUp } = useContext(AuthContext);
+
+     const [data, setData] = useState({
+          name: '',
+          city: '',
+          phone: '',
+          email: '',
+          password: ''
+     })
+
+     const nameInputChange = (val) => {
+          if (val.length != 0) {
+               setData({
+                    ...data,
+                    name: val,
+               })
+          }
+     }
+     const cityInputChange = (val) => {
+          if (val.length != 0) {
+               setData({
+                    ...data,
+                    city: val,
+               })
+          }
+     }
+     const phoneInputChange = (val) => {
+          if (val.length != 0) {
+               setData({
+                    ...data,
+                    phone: val,
+               })
+          }
+     }
+     const emailInputChange = (val) => {
+          if (val.length != 0) {
+               setData({
+                    ...data,
+                    email: val,
+               })
+          }
+     }
+     const passInputChange = (val) => {
+          if (val.length != 0) {
+               setData({
+                    ...data,
+                    password: val,
+               })
+          }
+     }
 
      return (
           <ScrollView style={styles.wrapper}>
                <Text style={styles.logoText}> <Text style={{ color: '#00C2FF' }}>S</Text>aviour</Text>
                <TextInput
-                    // value={this.state.username}
-                    // onChangeText={(username) => this.setState({ username })}
+                    onChangeText={(val) => nameInputChange(val)}
                     placeholder={'Name'}
                     style={styles.input}
                />
                <TextInput
-                    // value={this.state.password}
-                    // onChangeText={(password) => this.setState({ password })}
+                    onChangeText={(val) => cityInputChange(val)}
                     placeholder={'City'}
                     style={styles.input}
                />
                <TextInput
-                    // value={this.state.password}
-                    // onChangeText={(password) => this.setState({ password })}
+                    onChangeText={(val) => phoneInputChange(val)}
                     placeholder={'Phone'}
                     style={styles.input}
                     numeric
                     keyboardType={'numeric'}
                />
                <TextInput
-                    // value={this.state.password}
-                    // onChangeText={(password) => this.setState({ password })}
+                    onChangeText={(val) => emailInputChange(val)}
                     placeholder={'Email'}
                     style={styles.input}
                />
                <TextInput
-                    // value={this.state.password}
-                    // onChangeText={(password) => this.setState({ password })}
+                    onChangeText={(val) => passInputChange(val)}
                     placeholder={'Password'}
                     secureTextEntry={true}
                     style={styles.input}
@@ -53,11 +100,11 @@ export default function Register() {
 
                <TouchableOpacity
                     style={styles.button}
-               // onPress={e.preventDefault()}
+                    onPress={() => signUp()}
                ><Text style={styles.buttonText}>Create Account</Text>
                </TouchableOpacity>
 
-               <Text style={styles.promptText}>Already Have an Account?<Text style={{ color: '#00C2FF' }}> Sign In!</Text></Text>
+               <Text style={styles.promptText}>Already Have an Account?<Text style={{ color: '#00C2FF' }} onPress={() => navigation.navigate('Login')}> Sign In!</Text></Text>
           </ScrollView >
      );
 }

@@ -13,7 +13,7 @@ function RequestorProfileCompletion() {
                ><Text style={styles.buttonText}>Set Location</Text>
                </TouchableOpacity>
                <TouchableOpacity
-                    style={styles.button}
+                    style={styles.submitButton}
                // onPress={e.preventDefault()}
                ><Text style={styles.buttonText}>Continue</Text>
                </TouchableOpacity>
@@ -46,6 +46,13 @@ const styles = StyleSheet.create({
           width: 135,
           height: 44,
           backgroundColor: '#00C2FF',
+          margin: 20,
+     },
+     submitButton: {
+          borderRadius: 40,
+          width: 135,
+          height: 44,
+          backgroundColor: 'orange',
           margin: 20,
      },
      buttonText: {

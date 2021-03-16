@@ -1,23 +1,65 @@
-import React, { Component } from 'react';
-import { Image, Alert, Button, TextInput, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { Image, TextInput, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import logo from '../assets/logo.png';
+import { AuthContext } from '../components/Context'
 
-export default function Login() {
+export default function Login({ navigation }) {
+
+     const [data, setData] = useState({
+          userName: '',
+          email: '',
+          password: '',
+     })
+
+     const { signIn } = useContext(AuthContext)
+
+     // const userNameInputChange = (val) => {
+     //      if (val.length != 0) {
+     //           setData({
+     //                ...data,
+     //                userName: val,
+     //           })
+     //      }
+     // }
+     const emailInputChange = (val) => {
+          if (val.length != 0) {
+               setData({
+                    ...data,
+                    email: val,
+               })
+          }
+     }
+     const passInputChange = (val) => {
+          if (val.length != 0) {
+               setData({
+                    ...data,
+                    password: val,
+               })
+          }
+     }
+
+     const loginHandle = (userName, email, password) => {
+          signIn(userName, email, password)
+     }
 
      return (
           <View style={styles.container}>
                <Image style={styles.logo} source={logo} />
                <Text style={styles.logoText}> <Text style={{ color: '#00C2FF' }}>S</Text>aviour</Text>
+               {/* <TextInput
+                    onChangeText={(val) => userNameInputChange(val)}
+                    placeholder={'Name'}
+                    style={styles.input}
+               /> */}
                <TextInput
-                    // value={this.state.username}
-                    // onChangeText={(username) => this.setState({ username })}
+                    onChangeText={(val) => emailInputChange(val)}
                     placeholder={'Email'}
                     style={styles.input}
                />
                <View>
                     <TextInput
-                         // value={this.state.password}
-                         // onChangeText={(password) => this.setState({ password })}
+
+                         onChangeText={(val) => passInputChange(val)}
                          placeholder={'Password'}
                          secureTextEntry={true}
                          style={styles.input}
@@ -26,11 +68,11 @@ export default function Login() {
                </View>
                <TouchableOpacity
                     style={styles.button}
-               // onPress={e.preventDefault()}
+                    onPress={() => { loginHandle(data.userName, data.email, data.password) }}
                ><Text style={styles.buttonText}>Login</Text>
                </TouchableOpacity>
 
-               <Text style={styles.promptText}>Don't Have an Account? <Text style={{ color: '#00C2FF' }}>Sign Up!</Text></Text>
+               <Text style={styles.promptText}>Don't Have an Account? <Text style={{ color: '#00C2FF' }} onPress={() => navigation.navigate('Register')}>Sign Up!</Text></Text>
           </View >
      );
 }
@@ -40,10 +82,11 @@ const styles = StyleSheet.create({
           flex: 1,
           alignItems: 'center',
           justifyContent: 'center',
+          backgroundColor: '#fff'
      },
      logo: {
           width: 350,
-          height: 200,
+          height: 150,
      },
      logoText: {
           fontSize: 64,
@@ -78,6 +121,6 @@ const styles = StyleSheet.create({
           paddingTop: 0
      },
      promptText: {
-          fontSize: 20,
+          fontSize: 16,
      }
 });

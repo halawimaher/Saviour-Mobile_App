@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Platform, Text, View, StyleSheet, Dimensions, Button } from 'react-native';
+import { Platform, Text, View, StyleSheet, Dimensions, Button, TouchableOpacity } from 'react-native';
 import * as Location from 'expo-location';
 import MapView from 'react-native-maps';
 
@@ -26,8 +26,6 @@ export default function Map() {
     const typeUrl = `http://192.168.1.6:8000/api/requestors/1`;
     const response = await fetch(typeUrl, typeRequestOptions);
     const result = await response.json();
-    alert('posted')
-    console.log(result)
   };
 
   useEffect(() => {
@@ -45,11 +43,7 @@ export default function Map() {
 
   return (
     <View style={styles.container}>
-      <Button
-        style={styles.button}
-        title="Confirm"
-        onPress={AddCoords}
-      />
+
       {location ?
         <MapView
           style={styles.map}
@@ -63,6 +57,11 @@ export default function Map() {
             }
           }
         /> : <Text>Loading...</Text>}
+      <TouchableOpacity
+        style={styles.button}
+        title="Set Location"
+        onPress={AddCoords}
+      ><Text style={styles.buttonText}>Confirm Location</Text></TouchableOpacity>
     </View>
   );
 }
@@ -76,13 +75,18 @@ const styles = StyleSheet.create({
   },
   map: {
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-    zIndex: -1
+    height: Dimensions.get('window').height * 0.9,
   },
   button: {
-    zIndex: 10,
-    position: 'absolute',
-    bottom: 10,
-    left: 50
-  }
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height * 0.1,
+    backgroundColor: 'orange'
+  },
+  buttonText: {
+    paddingTop: 10,
+    textAlign: 'center',
+    fontSize: 26,
+    color: '#fff',
+    // fontFamily: 'RhodiumLibre_400Regular'
+  },
 });

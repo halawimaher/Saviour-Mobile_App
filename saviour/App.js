@@ -7,7 +7,11 @@ import Map from './Screens/Map'
 import RequestorProfileCompletion from './Screens/RequestorProfileCompletion'
 import ProviderProfileCompletion from './Screens/ProviderProfileCompletion'
 import RequestorProfile from './Screens/RequestorProfile'
+import RequestorProfile2 from './Screens/RequestorProfile2'
 import ProviderProfile from './Screens/ProviderProfile'
+import ProviderActionScreen from './Screens/ProviderActionScreen'
+import RequestorActionScreen from './Screens/RequestorActionScreen'
+import ProvidersList from './Screens/ProvidersList'
 import Constants from 'expo-constants'
 import { NavigationContainer, StackActions } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -24,15 +28,27 @@ const LoginStackScreen = ({ navigation }) => (
   </LoginStack.Navigator>
 )
 
-const RootStack = createStackNavigator();
-const RootStackScreen = ({ navigation }) => (
-  <RootStack.Navigator initialRouteName="ProviderProfile" headerMode="none">
-    <RootStack.Screen name="ProviderProfile" component={ProviderProfile} headerMode="none" />
-    <RootStack.Screen name="RequestorProfile" component={RequestorProfile} headerMode="none" />
-    <RootStack.Screen name="ProviderProfileCompletion" component={ProviderProfileCompletion} headerMode="none" />
-    <RootStack.Screen name="RequestorProfileCompletion" component={RequestorProfileCompletion} headerMode="none" />
-    <RootStack.Screen name="Map" component={Map} headerMode="none" />
-  </RootStack.Navigator>
+const ProviderStack = createStackNavigator();
+const ProviderStackScreen = ({ navigation }) => (
+  <ProviderStack.Navigator initialRouteName="ProviderActionScreen" headerMode="none" >
+    <ProviderStack.Screen name="ProviderActionScreen" component={ProviderActionScreen} />
+    <ProviderStack.Screen name="ProvidersList" component={ProvidersList} />
+    <RequestorStack.Screen name="ProviderProfile" component={ProviderProfile} />
+    <ProviderStack.Screen name="ProviderProfileCompletion" component={ProviderProfileCompletion} />
+    <ProviderStack.Screen name="Map" component={Map} />
+  </ProviderStack.Navigator>
+)
+
+const RequestorStack = createStackNavigator();
+const RequestorStackScreen = ({ navigation }) => (
+  <RequestorStack.Navigator initialRouteName="RequestorActionScreen" headerMode="none" >
+    <RequestorStack.Screen name="RequestorActionScreen" component={RequestorActionScreen} />
+    <RequestorStack.Screen name="RequestorProfile" component={RequestorProfile} />
+    <RequestorStack.Screen name="RequestorProfile2" component={RequestorProfile2} />
+    <ProviderStack.Screen name="ProvidersList" component={ProvidersList} />
+    <RequestorStack.Screen name="RequestorProfileCompletion" component={RequestorProfileCompletion} />
+    <RequestorStack.Screen name="Map" component={Map} />
+  </RequestorStack.Navigator>
 )
 
 export default function App() {
@@ -42,9 +58,13 @@ export default function App() {
    */
   initialLoginState = {
     isLoading: true,
-    userName: null,
+    name: null,
     email: null,
-    userToken: null
+    city: null,
+    address: null,
+    phone: null,
+    userToken: null,
+    role_id: null
   }
 
   /**
@@ -64,24 +84,27 @@ export default function App() {
       case 'LOGIN':
         return {
           ...prevState,
-          userName: action.userName,
           email: action.email,
+          role_id: action.role_id,
           userToken: action.token,
           isLoading: false
         }
       case 'LOGOUT':
         return {
           ...prevState,
-          userName: null,
+          name: null,
           email: null,
           userToken: null,
           isLoading: false
         }
       case 'REGISTER':
         return {
-          ...prevState,
-          userName: action.userName,
+          // ...prevState,
+          name: action.name,
           email: action.email,
+          city: action.city,
+          phone: action.phone,
+          address: action.address,
           userToken: action.token,
           isLoading: false
         }
@@ -94,14 +117,16 @@ export default function App() {
 
     /**
      * 
-     * @param {*} userName 
+     * @param {*} name 
      * @param {*} email 
      * @param {*} password 
      * User Login
      */
-    signIn: async (userName, email, password) => {
+    signIn: async (email, password) => {
       let userToken;
       userToken = null
+      let role_id;
+      role_id = null;
       const response = await fetch('http:192.168.1.6:8000/api/login', {
         method: 'POST',
         headers: {
@@ -110,24 +135,24 @@ export default function App() {
         },
         body: JSON.stringify(
           {
-            'userName': userName,
             'email': email,
             'password': password
           }
         ),
       })
       const result = await response.json();
-      if (userName == userName && email == email && password == password) {
+      if (email == email && password == password) {
         try {
           userToken = result.access_token,
-            await AsyncStorage.setItem('userToken', userToken)
+            role_id = result.role_id
+          await AsyncStorage.setItem('userToken', userToken)
+          await AsyncStorage.setItem('role_id', role_id.toString())
         } catch (e) {
           alert('Invalid Credentials!')
         }
 
       }
-      console.log(userToken)
-      dispatch({ type: 'LOGIN', userName: userName, email: email, token: userToken })
+      dispatch({ type: 'LOGIN', email: email, role_id: role_id, token: userToken })
     },
 
     /**
@@ -144,12 +169,14 @@ export default function App() {
 
     /**
      * 
-     * @param {*} userName 
+     * @param {*} name 
      * @param {*} email 
      * @param {*} password 
+     * @param {*} message
+     * @param {*} role_id
      * Registration Function
      */
-    signUp: async (userName, email, password) => {
+    signUp: async (name, email, password, city, address, phone, role_id) => {
       let userToken;
       userToken = null
       const response = await fetch('http:192.168.1.6:8000/api/register', {
@@ -160,24 +187,30 @@ export default function App() {
         },
         body: JSON.stringify(
           {
-            'userName': userName,
+            'name': name,
             'email': email,
-            'password': password
+            'password': password,
+            'city': city,
+            'address': address,
+            'phone': phone,
+            'role_id': role_id
           }
         ),
       })
-      console.warn(response)
       const result = await response.json();
-      console.warn(result)
       if (result.access_token) {
         try {
-          userToken = result.access_token,
-            await AsyncStorage.setItem('userToken', userToken)
+          userToken = result.access_token
+          role_id = result.role_id
+          await AsyncStorage.setItem('userToken', userToken)
+          alert('Welcome Aboard')
         } catch (e) {
-          console.log(e)
+          console.warn(e)
         }
+      } else {
+        alert(result.message)
       }
-      dispatch({ type: 'LOGIN', userName: userName, email: email, token: userToken })
+      dispatch({ type: 'REGISTER', name: name, email: email, role_id: role_id, city: city, address: address, phone: phone, token: userToken })
     },
   }), [])
 
@@ -185,12 +218,15 @@ export default function App() {
     setTimeout(async () => {
       let userToken
       userToken = null
+      let role_id
+      role_id = null
       try {
         userToken = await AsyncStorage.getItem('userToken')
+        role_id = await AsyncStorage.getItem('role_id')
       } catch (e) {
         console.log(e)
       }
-      dispatch({ type: 'REGISTER', token: userToken })
+      dispatch({ type: 'REGISTER', role_id: role_id, token: userToken })
     }, 1000);
   }, [])
 
@@ -204,11 +240,15 @@ export default function App() {
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-        {(loginState.userToken !== null && loginState.userToken !== undefined) ? (
-          <RootStackScreen />
+        {(loginState.userToken !== null && loginState.userToken !== undefined && loginState.role_id === 1) ? (
+          <ProviderStackScreen />
         )
           :
-          <LoginStackScreen />
+          (loginState.userToken !== null && loginState.userToken !== undefined && loginState.role_id === 2) ? (
+            <RequestorStackScreen />
+          )
+            :
+            <LoginStackScreen />
         }
       </NavigationContainer>
     </AuthContext.Provider>

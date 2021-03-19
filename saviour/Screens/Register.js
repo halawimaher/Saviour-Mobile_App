@@ -1,52 +1,49 @@
 import React, { useContext, useState } from 'react';
 import Checkbox from 'expo-checkbox';
-import { FlatList, Image, Alert, Button, TextInput, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { TextInput, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native';
 import { AuthContext } from '../components/Context';
+import { useFonts, RhodiumLibre_400Regular } from '@expo-google-fonts/rhodium-libre';
+import AppLoading from 'expo-app-loading';
 
 export default function Register({ navigation }) {
-     const [isChecked, setChecked] = useState(false);
 
+     let [fontsLoaded] = useFonts({
+          RhodiumLibre_400Regular,
+     });
+
+     const [isRequestor, setRequestor] = useState(false);
+     const [isProvider, setProvider] = useState(false);
      const { signUp } = useContext(AuthContext);
 
      const [data, setData] = useState({
-          userName: '',
-          // city: '',
-          // phone: '',
+          name: '',
+          city: '',
+          address: '',
+          phone: '',
           email: '',
-          password: ''
+          password: '',
+          role_id: ''
      })
 
      const newNameInputChange = (val) => {
+
           if (val.length != 0) {
                setData({
                     ...data,
-                    userName: val,
+                    name: val,
                })
+               console.log(data)
           }
      }
-     // const cityInputChange = (val) => {
-     //      if (val.length != 0) {
-     //           setData({
-     //                ...data,
-     //                city: val,
-     //           })
-     //      }
-     // }
-     // const phoneInputChange = (val) => {
-     //      if (val.length != 0) {
-     //           setData({
-     //                ...data,
-     //                phone: val,
-     //           })
-     //      }
-     // }
+
      const newEmailInputChange = (val) => {
           if (val.length != 0) {
                setData({
                     ...data,
                     email: val,
                })
+               console.log(data)
           }
      }
      const newPassInputChange = (val) => {
@@ -55,62 +52,123 @@ export default function Register({ navigation }) {
                     ...data,
                     password: val,
                })
+               console.log(data)
           }
      }
 
-     const registerHandle = (userName, email, password) => {
-          signUp(userName, email, password)
+     const newCityInputChange = (val) => {
+          if (val.length != 0) {
+               setData({
+                    ...data,
+                    city: val,
+               })
+               console.log(data)
+          }
      }
 
-     return (
-          <ScrollView style={styles.wrapper}>
-               <Text style={styles.logoText}> <Text style={{ color: '#00C2FF' }}>S</Text>aviour</Text>
-               <TextInput
-                    onChangeText={(val) => newNameInputChange(val)}
-                    placeholder={'Name'}
-                    style={styles.input}
-               />
-               {/* <TextInput
-                    onChangeText={(val) => cityInputChange(val)}
-                    placeholder={'City'}
-                    style={styles.input}
-               /> */}
-               {/* <TextInput
-                    onChangeText={(val) => phoneInputChange(val)}
-                    placeholder={'Phone'}
-                    style={styles.input}
-                    numeric
-                    keyboardType={'numeric'}
-               /> */}
-               <TextInput
-                    onChangeText={(val) => newEmailInputChange(val)}
-                    placeholder={'Email'}
-                    style={styles.input}
-               />
-               <TextInput
-                    onChangeText={(val) => newPassInputChange(val)}
-                    placeholder={'Password'}
-                    secureTextEntry={true}
-                    style={styles.input}
-               />
+     const newPhoneInputChange = (val) => {
+          if (val.length != 0) {
+               setData({
+                    ...data,
+                    phone: val,
+               })
+               console.log(data)
+          }
+     }
 
-               {/* <View style={styles.section}>
-                    <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-                    <Text style={styles.paragraph}>Requestor</Text>
-                    <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-                    <Text style={styles.paragraph}>Provider</Text>
-               </View> */}
+     const newAddressInputChange = (val) => {
+          if (val.length != 0) {
+               setData({
+                    ...data,
+                    address: val,
+               })
+               console.log(data)
+          }
+     }
+
+     const newProvider = (val) => {
+          if (val.length != 0) {
+               setData({
+                    ...data,
+                    role_id: 1,
+               })
+               console.log(data)
+          }
+     }
+
+     const newRequestor = (val) => {
+          if (val.length != 0) {
+               setData({
+                    ...data,
+                    role_id: 2,
+               })
+               console.log(data)
+          }
+     }
+
+     const registerHandle = (name, email, password, city, address, phone, role_id) => {
+          signUp(name, email, password, city, address, phone, role_id)
+     }
+
+     if (!fontsLoaded) {
+          return <AppLoading />;
+     } else {
+          return (
+               <ScrollView style={styles.wrapper}>
+                    <Text style={styles.logoText}> <Text style={{ color: '#00C2FF' }}>S</Text>aviour</Text>
+                    <TextInput
+                         onChangeText={(val) => newNameInputChange(val)}
+                         placeholder={'Name'}
+                         style={styles.input}
+                    />
+                    <TextInput
+                         onChangeText={(val) => newCityInputChange(val)}
+                         placeholder={'City'}
+                         style={styles.input}
+                    />
+                    <TextInput
+                         onChangeText={(val) => newAddressInputChange(val)}
+                         placeholder={'Detailed Address'}
+                         style={styles.input}
+                    />
+                    <TextInput
+                         onChangeText={(val) => newPhoneInputChange(val)}
+                         placeholder={'Phone'}
+                         style={styles.input}
+                         numeric
+                         keyboardType={'numeric'}
+                    />
+                    <TextInput
+                         onChangeText={(val) => newEmailInputChange(val)}
+                         placeholder={'Email'}
+                         style={styles.input}
+                         autoCapitalize='none'
+                    />
+                    <TextInput
+                         onChangeText={(val) => newPassInputChange(val)}
+                         placeholder={'Password'}
+                         secureTextEntry={true}
+                         style={styles.input}
+                    />
+
+                    <View style={styles.section}>
+                         <Checkbox style={styles.checkbox} id="requestor" name="requestor" value={isRequestor} onValueChange={(val) => { newProvider(val), setRequestor(!isRequestor), setProvider(false) }} />
+                         <Text style={styles.paragraph}>Requestor</Text>
+                         <Checkbox style={styles.checkbox} id="provider" name="provider" value={isProvider} onValueChange={(val) => { newRequestor(val), setProvider(!isProvider), setRequestor(false) }} />
+                         <Text style={styles.paragraph}>Provider</Text>
+                    </View>
 
 
-               <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => registerHandle(data.userName, data.email, data.password)}
-               ><Text style={styles.buttonText}>Create Account</Text>
-               </TouchableOpacity>
+                    <TouchableOpacity
+                         style={styles.button}
+                         onPress={() => registerHandle(data.name, data.email, data.password, data.city, data.address, data.phone, data.role_id)}
+                    ><Text style={styles.buttonText}>Create Account</Text>
+                    </TouchableOpacity>
 
-               <Text style={styles.promptText}>Already Have an Account?<Text style={{ color: '#00C2FF' }} onPress={() => navigation.navigate('Login')}> Sign In!</Text></Text>
-          </ScrollView >
-     );
+                    <Text style={styles.promptText}>Already Have an Account?<Text style={{ color: '#00C2FF' }} onPress={() => navigation.navigate('Login')}> Sign In!</Text></Text>
+               </ScrollView >
+          );
+     }
 }
 
 const styles = StyleSheet.create({
@@ -122,9 +180,11 @@ const styles = StyleSheet.create({
      logo: {
           width: 350,
           height: 200,
+          fontFamily: 'RhodiumLibre_400Regular'
      },
      logoText: {
           fontSize: 64,
+          fontFamily: 'RhodiumLibre_400Regular'
      },
      input: {
           width: 250,
@@ -133,7 +193,8 @@ const styles = StyleSheet.create({
           borderWidth: 1,
           borderColor: 'black',
           marginBottom: 20,
-          borderRadius: 40
+          borderRadius: 40,
+          fontFamily: 'RhodiumLibre_400Regular'
      },
      button: {
           borderRadius: 40,
@@ -146,12 +207,13 @@ const styles = StyleSheet.create({
           paddingTop: 10,
           textAlign: 'center',
           fontSize: 14,
-          fontWeight: 'bold',
           color: '#fff',
+          fontFamily: 'RhodiumLibre_400Regular'
      },
      promptText: {
           paddingTop: 50,
-          fontSize: 16,
+          fontSize: 15,
+          fontFamily: 'RhodiumLibre_400Regular'
      },
      section: {
           flexDirection: 'row',
@@ -159,9 +221,11 @@ const styles = StyleSheet.create({
      },
      paragraph: {
           fontSize: 15,
+          fontFamily: 'RhodiumLibre_400Regular'
 
      },
      checkbox: {
           margin: 8,
+          fontFamily: 'RhodiumLibre_400Regular'
      },
 });

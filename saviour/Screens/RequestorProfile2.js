@@ -73,7 +73,7 @@ function ProviderProfile({ navigation }) {
                          </View>
 
                          <View style={styles.infoContainer}>
-                              <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>Provider</Text>
+                              <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>Requestor</Text>
                               <Text style={[styles.text, { color: "#00C2FF", fontSize: 14 }]}>Photographer</Text>
                          </View>
 

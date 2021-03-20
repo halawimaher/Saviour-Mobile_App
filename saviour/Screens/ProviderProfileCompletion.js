@@ -1,100 +1,104 @@
 import React, { useState } from 'react'
-import { ScrollView, Image, Alert, Button, TextInput, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { Picker, Item } from '@react-native-community/picker'
-import logo from '../assets/logo.png';
+import { ScrollView, Dimensions, Image, Alert, Button, TextInput, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { Ionicons } from '@expo/vector-icons';
 
-function ProviderProfileCompletion() {
+function ProviderProfileCompletion({ navigation }) {
      const [itemValue, setItemValue] = useState('')
+     const [date, setDate] = useState(new Date());
+     const [show, setShow] = useState(false);
 
-     const handleChange = () => {
-          setItemValue(itemValue.value),
-               console.log(itemValue)
-     }
+     const handleChange = (event, selectedDate) => {
+          const currentDate = selectedDate || date;
+          setShow(Platform.OS === 'Android');
+          setDate(currentDate);
+          console.log(currentDate)
+     };
+
+     const showTimepicker = () => {
+          setShow(true);
+     };
 
      return (
-          <ScrollView style={styles.wrapper}>
-               <Text style={styles.paragraph}><Text style={styles.primaryText}>What days</Text> do you prefer to work on?</Text>
-               <View style={styles.picker}>
-                    <Picker
-                         mode='dropdown'
-                         selectedValue={itemValue}
-                         style={{ height: 20, width: 150 }}
-                         onValueChange={(itemValue, itemPosition) => handleChange}
-                    >
-                         <Picker.Item label="Monday" value="Monday" />
-                         <Picker.Item label="Tuesday" value="Tuesday" />
-                         <Picker.Item label="Wednesday" value="Wednesday" />
-                         <Picker.Item label="Thursday" value="Thursday" />
-                         <Picker.Item label="Friday" value="Friday" />
-                         <Picker.Item label="Saturday" value="Saturday" />
-                         <Picker.Item label="Sunday" value="Sunday" />
-                    </Picker>
-                    <Picker
-                         mode='dropdown'
-                         selectedValue='to'
-                         style={{ height: 20, width: 150 }}
-                    // onValueChange={(itemValue, itemIndex) => this.setState({ language: itemValue })}
-                    >
-                         <Picker.Item label="Monday" value="Monday" />
-                         <Picker.Item label="Tuesday" value="Tuesday" />
-                         <Picker.Item label="Wednesday" value="Wednesday" />
-                         <Picker.Item label="Thursday" value="Thursday" />
-                         <Picker.Item label="Friday" value="Friday" />
-                         <Picker.Item label="Saturday" value="Saturday" />
-                         <Picker.Item label="Sunday" value="Sunday" />
-                    </Picker>
+          <ScrollView contentContainerStyle={styles.contentContainer}>
+               <View style={styles.wrapper}>
+                    <Ionicons name="arrow-back-outline" size={46} color='black' style={{ alignSelf: 'flex-start' }} onPress={() => navigation.goBack()} />
+                    <Text style={styles.paragraph}><Text style={styles.primaryText}>What hours</Text> do you prefer to work on?</Text>
+                    <View style={styles.picker}>
+                         <View>
+                              <Button onPress={showTimepicker} title="Show date picker!" />
+                         </View>
+                         <View>
+                              <Button onPress={showTimepicker} title="Show time picker!" />
+                         </View>
+                         {show && (
+                              <DateTimePicker
+                                   testID="dateTimePicker"
+                                   value={date}
+                                   mode='time'
+                                   is24Hour={true}
+                                   display="default"
+                                   onChange={handleChange}
+                              />
+                         )}
+                    </View>
+                    {/* <TouchableOpacity
+                         style={styles.button}
+                    // onPress={e.preventDefault()}
+                    ><Text style={styles.buttonText}>Choose Working Hours</Text>
+                    </TouchableOpacity> */}
+                    <TextInput
+                         // value={this.state.username}
+                         // onChangeText={(username) => this.setState({ username })}
+                         placeholder={'Rate/Hour in LBP'}
+                         style={styles.input}
+                         numeric
+                         keyboardType={'numeric'}
+                    />
+                    <View style={styles.text}>
+                         <Text style={styles.paragraph}><Text style={styles.primaryText}>Final Verification Step</Text> To get verified and have your profile appear to other clients, please upload an image of your passport’s first page (Applicatble to non-Lebanese persons)</Text>
+                    </View>
+                    <TouchableOpacity
+                         style={styles.button}
+                    // onPress={e.preventDefault()}
+                    ><Text style={styles.buttonText}>Upload Docs</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                         style={styles.submitButton}
+                    // onPress={e.preventDefault()}
+                    ><Text style={styles.buttonText} onPress={() => navigation.navigate('ProviderProfile')} >Continue</Text>
+                    </TouchableOpacity>
                </View>
-               <TouchableOpacity
-                    style={styles.button}
-               // onPress={e.preventDefault()}
-               ><Text style={styles.buttonText}>Choose Working Hours</Text>
-               </TouchableOpacity>
-               <TextInput
-                    // value={this.state.username}
-                    // onChangeText={(username) => this.setState({ username })}
-                    placeholder={'Rate/Hour in LBP'}
-                    style={styles.input}
-                    numeric
-                    keyboardType={'numeric'}
-               />
-               <View style={styles.text}>
-                    <Text style={styles.paragraph}><Text style={styles.primaryText}>Final Verification Step</Text> To get verified and have your profile appear to other clients, please upload an image of your passport’s first page (Applicatble to non-Lebanese persons)</Text>
-               </View>
-               <TouchableOpacity
-                    style={styles.button}
-               // onPress={e.preventDefault()}
-               ><Text style={styles.buttonText}>Upload Docs</Text>
-               </TouchableOpacity>
-               <TouchableOpacity
-                    style={styles.submitButton}
-               // onPress={e.preventDefault()}
-               ><Text style={styles.buttonText}>Continue</Text>
-               </TouchableOpacity>
-          </ScrollView>
+          </ScrollView >
      )
 }
 
 const styles = StyleSheet.create({
+     contentContainer: {
+          flex: 1,
+          // paddingVertical: 20,
+          alignItems: 'center',
+          justifyContent: 'center',
+     },
      wrapper: {
           flex: 1,
-          // alignItems: 'center',
-          // justifyContent: 'space-evenly',
-          width: 300,
-          paddingTop: 60
-          // maxHeight: 400,
+          paddingTop: 30,
+          alignItems: 'center',
+          justifyContent: 'center',
      },
      picker: {
           flex: 1,
           flexDirection: 'row',
           alignItems: 'flex-start',
-          marginTop: 50,
+          marginTop: 30,
+          marginBottom: 5
      },
      input: {
           width: 280,
           padding: 10,
           borderWidth: 1,
           borderColor: 'black',
-          marginBottom: 30,
+          marginBottom: 20,
           borderRadius: 40
      },
      paragraph: {
@@ -104,7 +108,8 @@ const styles = StyleSheet.create({
           color: '#00C2FF'
      },
      text: {
-          marginBottom: 40,
+          marginBottom: 10,
+          padding: 20
      },
      button: {
           borderRadius: 40,

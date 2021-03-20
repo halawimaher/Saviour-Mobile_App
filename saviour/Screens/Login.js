@@ -13,14 +13,6 @@ export default function Login({ navigation }) {
 
      const { signIn } = useContext(AuthContext)
 
-     // const userNameInputChange = (val) => {
-     //      if (val.length != 0) {
-     //           setData({
-     //                ...data,
-     //                userName: val,
-     //           })
-     //      }
-     // }
      const emailInputChange = (val) => {
           if (val.length != 0) {
                setData({
@@ -38,23 +30,19 @@ export default function Login({ navigation }) {
           }
      }
 
-     const loginHandle = (userName, email, password) => {
-          signIn(userName, email, password)
+     const loginHandle = (email, password, role_id) => {
+          signIn(email, password, role_id)
      }
 
      return (
           <View style={styles.container}>
                <Image style={styles.logo} source={logo} />
                <Text style={styles.logoText}> <Text style={{ color: '#00C2FF' }}>S</Text>aviour</Text>
-               {/* <TextInput
-                    onChangeText={(val) => userNameInputChange(val)}
-                    placeholder={'Name'}
-                    style={styles.input}
-               /> */}
                <TextInput
                     onChangeText={(val) => emailInputChange(val)}
                     placeholder={'Email'}
                     style={styles.input}
+                    autoCapitalize='none'
                />
                <View>
                     <TextInput
@@ -68,7 +56,7 @@ export default function Login({ navigation }) {
                </View>
                <TouchableOpacity
                     style={styles.button}
-                    onPress={() => { loginHandle(data.userName, data.email, data.password) }}
+                    onPress={() => { loginHandle(data.email, data.password) }}
                ><Text style={styles.buttonText}>Login</Text>
                </TouchableOpacity>
 

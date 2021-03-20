@@ -35,7 +35,6 @@ export default function ProvidersList({ navigation }) {
 
   useEffect(() => {
     getData()
-    console.log(data)
   }, []);
 
   const clickEventListener = (data) => {
@@ -54,21 +53,21 @@ export default function ProvidersList({ navigation }) {
               <View style={styles.nameGrid}>
                 <Image style={{ width: 50, height: 50, marginRight: 5 }} source={{ uri: 'http://192.168.1.6:8000/storage/' + item.image }} />
                 <View>
-                  <Text style={styles.name}>{item.full_name}</Text>
-                  <Text style={styles.city}>{item.location.city}</Text>
+                  <Text style={styles.name}>{item.name}</Text>
+                  <Text style={styles.city}>{item.city}</Text>
                 </View>
               </View>
               {/* {item.services.map((service, key) =>
                 <Text key={key} style={styles.services}>{service.service}</Text>
               )} */}
               <View style={styles.buttonGrid}>
-                <TouchableOpacity style={styles.rateButton} onPress={() => clickEventListener(item.full_name)}>
+                <TouchableOpacity style={styles.rateButton} onPress={() => clickEventListener(item.name)}>
                   <Text style={styles.followButtonText}>View Profile</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.followButton} onPress={() => navigation.navigate('Map')}>
                   <Text style={styles.followButtonText}>Request</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.followButton} onPress={() => clickEventListener(item.full_name)}>
+                <TouchableOpacity style={styles.followButton} onPress={() => clickEventListener(item.name)}>
                   <Text style={styles.followButtonText}>Rate</Text>
                 </TouchableOpacity>
               </View>

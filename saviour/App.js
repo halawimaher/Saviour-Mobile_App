@@ -12,6 +12,8 @@ import ProviderProfile from './Screens/ProviderProfile'
 import ProviderActionScreen from './Screens/ProviderActionScreen'
 import RequestorActionScreen from './Screens/RequestorActionScreen'
 import ProvidersList from './Screens/ProvidersList'
+import ProviderComments from './Screens/ProviderComments'
+import RequestorComments from './Screens/RequestorComments'
 import Constants from 'expo-constants'
 import { NavigationContainer, StackActions } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -32,10 +34,11 @@ const ProviderStack = createStackNavigator();
 const ProviderStackScreen = ({ navigation }) => (
   <ProviderStack.Navigator initialRouteName="ProviderActionScreen" headerMode="none" >
     <ProviderStack.Screen name="ProviderActionScreen" component={ProviderActionScreen} />
-    <ProviderStack.Screen name="ProvidersList" component={ProvidersList} />
     <RequestorStack.Screen name="ProviderProfile" component={ProviderProfile} />
+    <ProviderStack.Screen name="ProvidersList" component={ProvidersList} />
     <ProviderStack.Screen name="ProviderProfileCompletion" component={ProviderProfileCompletion} />
     <ProviderStack.Screen name="Map" component={Map} />
+    <ProviderStack.Screen name="ProviderComments" component={ProviderComments} />
   </ProviderStack.Navigator>
 )
 
@@ -48,6 +51,7 @@ const RequestorStackScreen = ({ navigation }) => (
     <ProviderStack.Screen name="ProvidersList" component={ProvidersList} />
     <RequestorStack.Screen name="RequestorProfileCompletion" component={RequestorProfileCompletion} />
     <RequestorStack.Screen name="Map" component={Map} />
+    <ProviderStack.Screen name="RequestorComments" component={RequestorComments} />
   </RequestorStack.Navigator>
 )
 
@@ -240,11 +244,11 @@ export default function App() {
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-        {(loginState.userToken !== null && loginState.userToken !== undefined && loginState.role_id === 1) ? (
+        {(loginState.userToken !== null && loginState.userToken !== undefined && loginState.role_id === 2) ? (
           <ProviderStackScreen />
         )
           :
-          (loginState.userToken !== null && loginState.userToken !== undefined && loginState.role_id === 2) ? (
+          (loginState.userToken !== null && loginState.userToken !== undefined && loginState.role_id === 3) ? (
             <RequestorStackScreen />
           )
             :

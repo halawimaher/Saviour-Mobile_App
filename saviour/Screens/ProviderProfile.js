@@ -12,6 +12,21 @@ import { NavigationContainer } from '@react-navigation/native';
 
 function ProviderProfile({ navigation }) {
      const [image, setImage] = useState(null)
+     const [data, setData] = useState({})
+     const [isLoading, setLoading] = useState(true);
+
+     const getData = async () => {
+          fetch(`http:192.168.1.6:8000/api/providers/302`, {
+               method: 'GET',
+               headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+               },
+          })
+               .then((response) => response.json())
+               .then((res) => { setData(res), setLoading(false) })
+               .catch((error) => console.error(error))
+     }
 
      const { signOut } = useContext(AuthContext)
 
@@ -29,6 +44,7 @@ function ProviderProfile({ navigation }) {
                }
           }
           doSomething()
+          getData()
      }, [])
 
      const PickImage = async () => {
@@ -72,24 +88,25 @@ function ProviderProfile({ navigation }) {
                               </View>
                          </View>
 
-                         <View style={styles.infoContainer}>
-                              <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>Provider</Text>
-                              <Text style={[styles.text, { color: "#00C2FF", fontSize: 14 }]}>Photographer</Text>
-                         </View>
-
+                         {isLoading ? <Text>Loading...</Text> :
+                              <View style={styles.infoContainer}>
+                                   <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>{data.data.name}</Text>
+                                   <Text style={[styles.text, { color: "#00C2FF", fontSize: 14 }]}>{data.data.city}</Text>
+                              </View>
+                         }
                          <View style={styles.statsContainer}>
                               <View style={styles.statsBox}>
-                                   <Text style={[styles.text, { fontSize: 24 }]}>483</Text>
+                                   <Text style={[styles.text, { fontSize: 24 }]}>48</Text>
                                    <Text style={[styles.text, styles.subText]}>Likes</Text>
                               </View>
                               <View style={[styles.statsBox, { borderColor: "#00C2FF", borderLeftWidth: 1, borderRightWidth: 1 }]}>
-                                   <Text style={[styles.text, { fontSize: 24 }]}>45,844</Text>
+                                   <Text style={[styles.text, { fontSize: 24 }]}>44</Text>
                                    <Text style={[styles.text, styles.subText]}>Comments</Text>
                               </View>
                          </View>
                          <TouchableOpacity
                               style={styles.button}
-                         // onPress={e.preventDefault()}
+                              onPress={() => navigation.navigate('ProviderComments')}
                          ><Text style={styles.buttonText}>View All Feedback</Text>
                          </TouchableOpacity>
                     </ScrollView>

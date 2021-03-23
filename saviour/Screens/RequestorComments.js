@@ -16,7 +16,7 @@ function RequestorComments({ navigation }) {
      const [data, setData] = useState({})
 
      const getComments = () => {
-          fetch('http:192.168.1.6:8000/api/requestors/301', {
+          fetch(`http:192.168.1.6:8000/api/requestors/${user_id}`, {
                method: 'GET',
                headers: {
                     'Content-Type': 'application/json',

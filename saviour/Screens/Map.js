@@ -20,7 +20,8 @@ export default function Map({ navigation }) {
       },
       body: JSON.stringify({
         latitude: location.coords.latitude,
-        longitude: location.coords.longitude
+        longitude: location.coords.longitude,
+        requestor_id: user_id
       }),
     };
 

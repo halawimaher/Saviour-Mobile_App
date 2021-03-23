@@ -38,8 +38,7 @@ export default function ProvidersList({ navigation }) {
   }, []);
 
   const clickEventListener = (data) => {
-    setUserSelected(data)
-    setModalVisible(true)
+    console.log(data)
   };
 
   return (
@@ -61,13 +60,13 @@ export default function ProvidersList({ navigation }) {
                 <Text key={key} style={styles.services}>{service.service}</Text>
               )} */}
               <View style={styles.buttonGrid}>
-                <TouchableOpacity style={styles.rateButton} onPress={() => clickEventListener(item.name)}>
-                  <Text style={styles.followButtonText}>View Profile</Text>
+                <TouchableOpacity style={styles.rateButton} onPress={() => clickEventListener(item.id)}>
+                  <Text style={styles.followButtonText}>More Info</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.followButton} onPress={() => navigation.navigate('Map')}>
                   <Text style={styles.followButtonText}>Request</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.followButton} onPress={() => clickEventListener(item.name)}>
+                <TouchableOpacity style={styles.followButton} onPress={() => navigation.navigate('FeedbackForProvidersScreen')}>
                   <Text style={styles.followButtonText}>Rate</Text>
                 </TouchableOpacity>
               </View>

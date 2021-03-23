@@ -19,7 +19,7 @@ function RequestorActionScreen({ navigation }) {
           return (
                <ScrollView style={styles.wrapper}>
                     <View style={styles.welcomeMessage}>
-                         <Text style={styles.paragraph}>Hello <Text style={styles.primaryText}>Requestor</Text> </Text>
+                         <Text style={styles.paragraph}>Hello </Text>
                          <Text style={styles.logOut} onPress={() => { signOut() }}>Log Out</Text>
                          <StatusBar style='auto' />
                     </View>
@@ -61,7 +61,8 @@ const styles = StyleSheet.create({
           paddingBottom: 10,
           fontSize: 40,
           textAlign: 'center',
-          fontFamily: 'RhodiumLibre_400Regular'
+          fontFamily: 'RhodiumLibre_400Regular',
+          color: '#00C2FF',
      },
      primaryText: {
           color: '#00C2FF',

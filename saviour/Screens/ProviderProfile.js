@@ -16,7 +16,7 @@ function ProviderProfile({ navigation }) {
      const [isLoading, setLoading] = useState(true);
 
      const getData = async () => {
-          fetch(`http:192.168.1.6:8000/api/providers/302`, {
+          fetch(`http:192.168.1.6:8000/api/providers/${user_id}`, {
                method: 'GET',
                headers: {
                     'Content-Type': 'application/json',
@@ -102,7 +102,7 @@ function ProviderProfile({ navigation }) {
                                    <View style={styles.statsContainer}>
                                         <View style={styles.statsBox}>
                                              <Text style={[styles.text, { fontSize: 24 }]}>{data.provider_bookings_count}</Text>
-                                             <Text style={[styles.text, styles.subText]}>Times Saved</Text>
+                                             <Text style={[styles.text, styles.subText]}>People Saved</Text>
                                         </View>
                                         <View style={[styles.statsBox, { borderColor: "#00C2FF", borderLeftWidth: 1, borderRightWidth: 1 }]}>
                                              <Text style={[styles.text, { fontSize: 24 }]}>{data.provider_feedback_count}</Text>

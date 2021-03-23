@@ -8,15 +8,15 @@ import { Avatar } from "react-native-elements";
 import Constants from 'expo-constants'
 import { AuthContext } from '../components/Context'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { NavigationContainer } from '@react-navigation/native';
 
 function ProviderProfile({ navigation }) {
+
      const [image, setImage] = useState(null)
      const [data, setData] = useState({})
      const [isLoading, setLoading] = useState(true);
 
      const getData = async () => {
-          fetch(`http:192.168.1.6:8000/api/requestors/301`, {
+          fetch(`http:192.168.1.6:8000/api/requestors/${user_id}`, {
                method: 'GET',
                headers: {
                     'Content-Type': 'application/json',
@@ -99,7 +99,7 @@ function ProviderProfile({ navigation }) {
                                    <View style={styles.statsContainer}>
                                         <View style={styles.statsBox}>
                                              <Text style={[styles.text, { fontSize: 24 }]}>{data.requestor_bookings_count}</Text>
-                                             <Text style={[styles.text, styles.subText]}>People Saved</Text>
+                                             <Text style={[styles.text, styles.subText]}>Total Rescues</Text>
                                         </View>
                                         <View style={[styles.statsBox, { borderColor: "#00C2FF", borderLeftWidth: 1, borderRightWidth: 1 }]}>
                                              <Text style={[styles.text, { fontSize: 24 }]}>{data.requestor_feedback_count}</Text>

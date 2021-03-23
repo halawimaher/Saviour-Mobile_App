@@ -16,7 +16,7 @@ function ProviderComments({ navigation }) {
      const [data, setData] = useState({})
 
      const getComments = () => {
-          fetch('http:192.168.1.6:8000/api/providers', {
+          fetch('http:192.168.1.6:8000/api/providers/302', {
                method: 'GET',
                headers: {
                     'Content-Type': 'application/json',
@@ -43,11 +43,10 @@ function ProviderComments({ navigation }) {
                     )
                }}
                keyExtractor={(item) => {
-                    return item.id;
+                    return item.id.toString();
                }}
                renderItem={(item) => {
                     const Notification = item.item;
-                    console.log(Notification.data)
                     return (
                          <View style={styles.container}>
                               <View><Ionicons name="arrow-back-outline" size={46} color='black' onPress={() => navigation.goBack()} /></View>
@@ -59,8 +58,8 @@ function ProviderComments({ navigation }) {
                                         <TouchableOpacity onPress={() => { }}>
                                              <Image style={styles.image} source={{ uri: Notification.image }} />
                                         </TouchableOpacity>
-                                        {Notification.provider_feedback.map((mes) =>
-                                             <View style={styles.feedbackContent}>
+                                        {Notification.provider_feedback.map((mes, key) =>
+                                             <View key={key} style={styles.feedbackContent}>
                                                   <Text rkType='primary3 mediumLine'>{mes.feedback}</Text>
                                                   <Text style={styles.time}>
                                                        {mes.rating}

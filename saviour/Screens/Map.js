@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Platform, Text, View, StyleSheet, Dimensions, Button, TouchableOpacity } from 'react-native';
 import * as Location from 'expo-location';
 import MapView from 'react-native-maps';
+import { NavigationContainer } from '@react-navigation/native';
 
-export default function Map() {
+export default function Map({ navigation }) {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const latitudeDelta = 0.093
@@ -11,7 +12,7 @@ export default function Map() {
 
   const AddCoords = async () => {
     const typeRequestOptions = {
-      method: "PUT",
+      method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -23,9 +24,10 @@ export default function Map() {
       }),
     };
 
-    const typeUrl = `http://192.168.1.6:8000/api/requestors/1`;
+    const typeUrl = `http://192.168.1.6:8000/api/bookings`;
     const response = await fetch(typeUrl, typeRequestOptions);
     const result = await response.json();
+    navigation.navigate('BookingConfirmationScreen')
   };
 
   useEffect(() => {
@@ -38,6 +40,7 @@ export default function Map() {
 
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
+      console.log(location)
     })();
   }, []);
 

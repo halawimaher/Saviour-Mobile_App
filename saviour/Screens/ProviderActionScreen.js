@@ -26,7 +26,7 @@ function ProviderActionScreen({ navigation }) {
                     <View style={styles.buttonGrid}>
                          <TouchableOpacity
                               style={styles.button}
-                              onPress={() => navigation.navigate('ProvidersList')}
+                              onPress={() => navigation.navigate('RequestorBookingsScreen')}
                          ><Text style={styles.buttonText}>See Who Needs Help</Text>
                          </TouchableOpacity>
                          <TouchableOpacity
@@ -34,11 +34,6 @@ function ProviderActionScreen({ navigation }) {
                               onPress={() => navigation.navigate('ProviderProfile')}
                          ><Text style={styles.buttonText}>View Your Profile</Text>
                          </TouchableOpacity>
-                         {/* <TouchableOpacity
-                              style={styles.button}
-                              onPress={() => navigation.navigate('ProviderProfile')}
-                         ><Text style={styles.buttonText}>View Your Profile</Text>
-                         </TouchableOpacity> */}
                     </View>
                </ScrollView>
           )

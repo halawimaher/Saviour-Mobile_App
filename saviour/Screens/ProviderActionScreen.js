@@ -19,26 +19,21 @@ function ProviderActionScreen({ navigation }) {
           return (
                <ScrollView style={styles.wrapper}>
                     <View style={styles.welcomeMessage}>
-                         <Text style={styles.paragraph}>Hello <Text style={styles.primaryText}>Provider</Text> </Text>
+                         <Text style={styles.paragraph}>Hello </Text>
                          <Text style={styles.logOut} onPress={() => { signOut() }}>Log Out</Text>
                          <StatusBar style='auto' />
                     </View>
                     <View style={styles.buttonGrid}>
                          <TouchableOpacity
                               style={styles.button}
-                              onPress={() => navigation.navigate('ProvidersList')}
-                         ><Text style={styles.buttonText}>See Who Needs Help</Text>
+                              onPress={() => navigation.navigate('RequestorBookingsScreen')}
+                         ><Text style={styles.buttonText}>See Who Needs Your Help</Text>
                          </TouchableOpacity>
                          <TouchableOpacity
                               style={styles.button}
                               onPress={() => navigation.navigate('ProviderProfile')}
                          ><Text style={styles.buttonText}>View Your Profile</Text>
                          </TouchableOpacity>
-                         {/* <TouchableOpacity
-                              style={styles.button}
-                              onPress={() => navigation.navigate('ProviderProfile')}
-                         ><Text style={styles.buttonText}>View Your Profile</Text>
-                         </TouchableOpacity> */}
                     </View>
                </ScrollView>
           )
@@ -66,7 +61,8 @@ const styles = StyleSheet.create({
           paddingBottom: 10,
           fontSize: 40,
           textAlign: 'center',
-          fontFamily: 'RhodiumLibre_400Regular'
+          fontFamily: 'RhodiumLibre_400Regular',
+          color: '#00C2FF',
      },
      primaryText: {
           color: '#00C2FF',

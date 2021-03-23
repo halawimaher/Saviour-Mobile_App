@@ -16,7 +16,7 @@ function ProviderProfile({ navigation }) {
      const [isLoading, setLoading] = useState(true);
 
      const getData = async () => {
-          fetch(`http:192.168.1.6:8000/api/providers/302`, {
+          fetch(`http:192.168.1.6:8000/api/providers/${user_id}`, {
                method: 'GET',
                headers: {
                     'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ function ProviderProfile({ navigation }) {
                },
           })
                .then((response) => response.json())
-               .then((res) => { setData(res), setLoading(false) })
+               .then((res) => { setData(res[0]), setLoading(false) })
                .catch((error) => console.error(error))
      }
 
@@ -89,21 +89,28 @@ function ProviderProfile({ navigation }) {
                          </View>
 
                          {isLoading ? <Text>Loading...</Text> :
-                              <View style={styles.infoContainer}>
-                                   <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>{data.data.name}</Text>
-                                   <Text style={[styles.text, { color: "#00C2FF", fontSize: 14 }]}>{data.data.city}</Text>
-                              </View>
+                              <>
+                                   <View style={styles.infoContainer}>
+                                        <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>{data.name}</Text>
+                                        <Text style={[styles.text, { color: "#00C2FF", fontSize: 14 }]}>{data.city}</Text>
+
+                                        <View style={{ borderColor: "#00C2FF", borderTopWidth: 1, paddingTop: 2 }}>
+                                             <Text style={[styles.personalMessage]}>{data.personal_message}</Text>
+                                        </View>
+                                   </View>
+
+                                   <View style={styles.statsContainer}>
+                                        <View style={styles.statsBox}>
+                                             <Text style={[styles.text, { fontSize: 24 }]}>{data.provider_bookings_count}</Text>
+                                             <Text style={[styles.text, styles.subText]}>People Saved</Text>
+                                        </View>
+                                        <View style={[styles.statsBox, { borderColor: "#00C2FF", borderLeftWidth: 1, borderRightWidth: 1 }]}>
+                                             <Text style={[styles.text, { fontSize: 24 }]}>{data.provider_feedback_count}</Text>
+                                             <Text style={[styles.text, styles.subText]}>Comments</Text>
+                                        </View>
+                                   </View>
+                              </>
                          }
-                         <View style={styles.statsContainer}>
-                              <View style={styles.statsBox}>
-                                   <Text style={[styles.text, { fontSize: 24 }]}>48</Text>
-                                   <Text style={[styles.text, styles.subText]}>Likes</Text>
-                              </View>
-                              <View style={[styles.statsBox, { borderColor: "#00C2FF", borderLeftWidth: 1, borderRightWidth: 1 }]}>
-                                   <Text style={[styles.text, { fontSize: 24 }]}>44</Text>
-                                   <Text style={[styles.text, styles.subText]}>Comments</Text>
-                              </View>
-                         </View>
                          <TouchableOpacity
                               style={styles.button}
                               onPress={() => navigation.navigate('ProviderComments')}

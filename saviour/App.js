@@ -14,6 +14,10 @@ import RequestorActionScreen from './Screens/RequestorActionScreen'
 import ProvidersList from './Screens/ProvidersList'
 import ProviderComments from './Screens/ProviderComments'
 import RequestorComments from './Screens/RequestorComments'
+import RequestorBookingsScreen from './Screens/RequestorBookingsScreen'
+import BookingConfirmationScreen from './Screens/BookingConfirmationScreen'
+import FeedbackForProvidersScreen from './Screens/FeedbackForProvidersScreen'
+import FeedbackForRequestorsScreen from './Screens/FeedbackForRequestorsScreen'
 import Constants from 'expo-constants'
 import { NavigationContainer, StackActions } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -35,8 +39,9 @@ const ProviderStackScreen = ({ navigation }) => (
   <ProviderStack.Navigator initialRouteName="ProviderActionScreen" headerMode="none" >
     <ProviderStack.Screen name="ProviderActionScreen" component={ProviderActionScreen} />
     <RequestorStack.Screen name="ProviderProfile" component={ProviderProfile} />
-    <ProviderStack.Screen name="ProvidersList" component={ProvidersList} />
+    <ProviderStack.Screen name="RequestorBookingsScreen" component={RequestorBookingsScreen} />
     <ProviderStack.Screen name="ProviderProfileCompletion" component={ProviderProfileCompletion} />
+    <ProviderStack.Screen name="FeedbackForRequestorsScreen" component={FeedbackForRequestorsScreen} />
     <ProviderStack.Screen name="Map" component={Map} />
     <ProviderStack.Screen name="ProviderComments" component={ProviderComments} />
   </ProviderStack.Navigator>
@@ -52,6 +57,8 @@ const RequestorStackScreen = ({ navigation }) => (
     <RequestorStack.Screen name="RequestorProfileCompletion" component={RequestorProfileCompletion} />
     <RequestorStack.Screen name="Map" component={Map} />
     <ProviderStack.Screen name="RequestorComments" component={RequestorComments} />
+    <ProviderStack.Screen name="FeedbackForProvidersScreen" component={FeedbackForProvidersScreen} />
+    <ProviderStack.Screen name="BookingConfirmationScreen" component={BookingConfirmationScreen} />
   </RequestorStack.Navigator>
 )
 
@@ -146,11 +153,14 @@ export default function App() {
       })
       const result = await response.json();
       if (email == email && password == password) {
+        user_id = result.user_id
         try {
           userToken = result.access_token,
             role_id = result.role_id
+
           await AsyncStorage.setItem('userToken', userToken)
           await AsyncStorage.setItem('role_id', role_id.toString())
+          await AsyncStorage.setItem('user_id', user_id.toString())
         } catch (e) {
           alert('Invalid Credentials!')
         }

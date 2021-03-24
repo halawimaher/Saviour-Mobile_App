@@ -20,7 +20,6 @@ function ProviderActionScreen({ navigation }) {
                <ScrollView style={styles.wrapper}>
                     <View style={styles.welcomeMessage}>
                          <Text style={styles.paragraph}>Hello </Text>
-                         <Text style={styles.logOut} onPress={() => { signOut() }}>Log Out</Text>
                          <StatusBar style='auto' />
                     </View>
                     <View style={styles.buttonGrid}>
@@ -33,6 +32,10 @@ function ProviderActionScreen({ navigation }) {
                               style={styles.button}
                               onPress={() => navigation.navigate('ProviderProfile')}
                          ><Text style={styles.buttonText}>View Your Profile</Text>
+                         </TouchableOpacity>
+                         <TouchableOpacity
+                              style={styles.logOut}
+                         ><Text style={styles.logOutText} onPress={() => { signOut() }}>Log Out</Text>
                          </TouchableOpacity>
                     </View>
                </ScrollView>
@@ -52,9 +55,18 @@ const styles = StyleSheet.create({
           fontFamily: 'RhodiumLibre_400Regular',
      },
      logOut: {
-          color: 'red',
+          borderRadius: 40,
+          width: 235,
+          height: 44,
+          backgroundColor: 'red',
+          margin: 5,
+          alignSelf: 'center'
+     },
+     logOutText: {
+          paddingTop: 10,
+          textAlign: 'center',
           fontSize: 16,
-          alignSelf: 'center',
+          color: '#fff',
           fontFamily: 'RhodiumLibre_400Regular'
      },
      paragraph: {

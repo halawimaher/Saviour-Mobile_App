@@ -10,13 +10,15 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-function ProviderComments({ navigation }) {
+function ProviderComments({ navigation, route }) {
+
+     const { item } = route.params
 
      const [isLoading, setLoading] = useState(true);
      const [data, setData] = useState({})
 
      const getComments = () => {
-          fetch('http:192.168.1.6:8000/api/providers/302', {
+          fetch(`http:192.168.1.6:8000/api/providers/${item.id}`, {
                method: 'GET',
                headers: {
                     'Content-Type': 'application/json',

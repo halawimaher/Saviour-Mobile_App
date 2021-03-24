@@ -10,13 +10,15 @@ import { AuthContext } from '../components/Context'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 
-function ProviderProfile({ navigation }) {
+function RequestorPreviewScreen({ navigation, route }) {
+     const { item } = route.params
+     console.log(item)
      const [image, setImage] = useState(null)
      const [data, setData] = useState({})
      const [isLoading, setLoading] = useState(true);
 
      const getData = async () => {
-          fetch(`http:192.168.1.6:8000/api/providers/${user_id}`, {
+          fetch(`http:192.168.1.6:8000/api/requestors/${item.requestor_id}`, {
                method: 'GET',
                headers: {
                     'Content-Type': 'application/json',
@@ -47,19 +49,6 @@ function ProviderProfile({ navigation }) {
           getData()
      }, [])
 
-     const PickImage = async () => {
-          let result = await ImagePicker.launchImageLibraryAsync({
-               mediaTypes: ImagePicker.MediaTypeOptions.All,
-               allowsEditing: true,
-               aspect: [4, 3],
-               quality: 1
-          })
-          console.log(result)
-          if (!result.cancelled) {
-               setImage(result.uri)
-          }
-     }
-
      if (!fontsLoaded) {
           return <AppLoading />;
      } else {
@@ -81,9 +70,6 @@ function ProviderProfile({ navigation }) {
                                    />
                                         :
                                         <Image source={{ uri: image }} style={styles.image} />}
-                                   <TouchableOpacity style={styles.imageButton} onPress={PickImage}>
-                                        <Ionicons name="camera" size={46} color='orange' />
-                                   </TouchableOpacity>
                                    <StatusBar style='auto' />
                               </View>
                          </View>
@@ -113,7 +99,7 @@ function ProviderProfile({ navigation }) {
                          }
                          <TouchableOpacity
                               style={styles.button}
-                              onPress={() => navigation.navigate('ProviderComments', { item })}
+                              onPress={() => navigation.navigate('RequestorComments', { item })}
                          ><Text style={styles.buttonText}>View All Feedback</Text>
                          </TouchableOpacity>
                     </ScrollView>
@@ -209,4 +195,4 @@ const styles = StyleSheet.create({
      },
 })
 
-export default ProviderProfile
+export default RequestorPreviewScreen

@@ -18,6 +18,7 @@ export default function RequestorBookingsList({ navigation }) {
 
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([])
+  const [statusColor, setStatusColor] = useState(null)
 
   const getData = () => {
     fetch(`http:192.168.1.6:8000/api/providers/${user_id}`, {
@@ -37,7 +38,7 @@ export default function RequestorBookingsList({ navigation }) {
   }, []);
 
   const clickEventListener = (data) => {
-    setUserSelected(data)
+    // setUserSelected(data)
     setModalVisible(true)
   };
 
@@ -53,24 +54,25 @@ export default function RequestorBookingsList({ navigation }) {
                 <Image style={{ width: 50, height: 50, marginRight: 5 }} source={{ uri: 'http://192.168.1.6:8000/storage/' + item.image }} />
                 <View>
                   <Text style={styles.name}>{item.requestor_id}</Text>
+                  {item.status == 1 ? <Ionicons color='green' name="ellipse"></Ionicons> : <Ionicons color='red' name="ellipse"></Ionicons>}
                   <Text style={{ color: 'blue' }}
                     onPress={() => Linking.openURL(`https://maps.google.com/?q=${item.latitude},${item.longitude}`)}>
-                    Google
-</Text>
+                    View Location in Maps
+                </Text>
                 </View>
               </View>
 
               <View style={styles.buttonGrid}>
-                <TouchableOpacity style={styles.rateButton} onPress={() => clickEventListener(item.name)}>
+                <TouchableOpacity style={styles.rateButton} onPress={() => navigation.navigate('RequestorPreviewScreen', { item })}>
                   <Text style={styles.followButtonText}>More Details</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.followButton} onPress={() => navigation.navigate('Map')}>
+                <TouchableOpacity style={styles.followButton} onPress={() => Linking.openURL(`https://maps.google.com/?q=${item.latitude},${item.longitude}`)}>
                   <Text style={styles.followButtonText}>Accept</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.followButton} onPress={() => clickEventListener(item.name)}>
                   <Text style={styles.followButtonText}>Decline</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.followButton} onPress={() => navigation.navigate('FeedbackForRequestorsScreen')}>
+                <TouchableOpacity style={styles.followButton} onPress={() => navigation.navigate('FeedbackForRequestorsScreen', { item })}>
                   <Text style={styles.followButtonText}>Rate</Text>
                 </TouchableOpacity>
               </View>

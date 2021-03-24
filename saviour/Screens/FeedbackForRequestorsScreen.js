@@ -5,10 +5,11 @@ import { useFonts, RhodiumLibre_400Regular } from '@expo-google-fonts/rhodium-li
 import AppLoading from 'expo-app-loading';
 import { Ionicons } from '@expo/vector-icons';
 
-function FeedbackForRequestorsScreen({ navigation }) {
+function FeedbackForRequestorsScreen({ navigation, route }) {
+
+     const { item } = route.params
 
      const [data, setData] = useState({
-          requestor_id: 302,
           rating: '',
           feedback: ''
      })
@@ -39,7 +40,7 @@ function FeedbackForRequestorsScreen({ navigation }) {
                     //Authorization: "Bearer " + token,
                },
                body: JSON.stringify({
-                    requestor_id: data.requestor_id,
+                    requestor_id: item.requestor_id,
                     rating: data.rating,
                     feedback: data.feedback
                }),

@@ -12,7 +12,6 @@ import { NavigationContainer } from '@react-navigation/native';
 
 function ProviderPreviewScreen({ navigation, route }) {
      const { item } = route.params
-     console.log(item)
      const [image, setImage] = useState(null)
      const [data, setData] = useState({})
      const [isLoading, setLoading] = useState(true);

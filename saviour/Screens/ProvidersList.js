@@ -37,9 +37,9 @@ export default function ProvidersList({ navigation }) {
     getData()
   }, []);
 
-  const clickEventListener = (data) => {
-    console.log(data)
-  };
+  // const clickEventListener = (data) => {
+  //   console.log(data)
+  // };
 
   return (
     <ScrollView style={{ height: Dimensions.get('window').height, width: Dimensions.get('window').width }}>

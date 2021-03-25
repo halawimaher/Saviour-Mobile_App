@@ -12,7 +12,6 @@ import { NavigationContainer } from '@react-navigation/native';
 
 function RequestorPreviewScreen({ navigation, route }) {
      const { item } = route.params
-     console.log(item)
      const [image, setImage] = useState(null)
      const [data, setData] = useState({})
      const [isLoading, setLoading] = useState(true);
@@ -26,7 +25,7 @@ function RequestorPreviewScreen({ navigation, route }) {
                },
           })
                .then((response) => response.json())
-               .then((res) => { setData(res[0]), setLoading(false) })
+               .then((res) => { setData(res[0]), setLoading(false), console.log(res) })
                .catch((error) => console.error(error))
      }
 
@@ -87,11 +86,11 @@ function RequestorPreviewScreen({ navigation, route }) {
 
                                    <View style={styles.statsContainer}>
                                         <View style={styles.statsBox}>
-                                             <Text style={[styles.text, { fontSize: 24 }]}>{data.provider_bookings_count}</Text>
-                                             <Text style={[styles.text, styles.subText]}>People Saved</Text>
+                                             <Text style={[styles.text, { fontSize: 24 }]}>{data.requestor_bookings_count}</Text>
+                                             <Text style={[styles.text, styles.subText]}>Times Saved</Text>
                                         </View>
                                         <View style={[styles.statsBox, { borderColor: "#00C2FF", borderLeftWidth: 1, borderRightWidth: 1 }]}>
-                                             <Text style={[styles.text, { fontSize: 24 }]}>{data.provider_feedback_count}</Text>
+                                             <Text style={[styles.text, { fontSize: 24 }]}>{data.requestor_feedback_count}</Text>
                                              <Text style={[styles.text, styles.subText]}>Comments</Text>
                                         </View>
                                    </View>

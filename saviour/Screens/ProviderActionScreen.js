@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { View, StyleSheet, Text, Platform, StatusBar, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { useFonts, RhodiumLibre_400Regular } from '@expo-google-fonts/rhodium-libre';
 import AppLoading from 'expo-app-loading';
-import Constants from 'expo-constants'
+import logo from '../assets/logo.png';
 import { AuthContext } from '../components/Context'
 
 function ProviderActionScreen({ navigation }) {
@@ -20,6 +20,7 @@ function ProviderActionScreen({ navigation }) {
                <ScrollView style={styles.wrapper}>
                     <View style={styles.welcomeMessage}>
                          <Text style={styles.paragraph}>Hello </Text>
+                         <Image style={styles.logo} source={logo} />
                          <StatusBar style='auto' />
                     </View>
                     <View style={styles.buttonGrid}>
@@ -53,6 +54,10 @@ const styles = StyleSheet.create({
           alignContent: 'flex-start',
           justifyContent: 'space-between',
           fontFamily: 'RhodiumLibre_400Regular',
+     },
+     logo: {
+          width: 350,
+          height: 150,
      },
      logOut: {
           borderRadius: 40,

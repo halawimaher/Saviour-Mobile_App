@@ -108,11 +108,11 @@ function ProviderProfile({ navigation }) {
                                    </View>
                               </View>
                          }
-                         <TouchableOpacity
+                         {/* <TouchableOpacity
                               style={styles.button}
                               onPress={() => navigation.navigate('RequestorComments')}
                          ><Text style={styles.buttonText}>View All Feedback</Text>
-                         </TouchableOpacity>
+                         </TouchableOpacity> */}
                     </ScrollView>
                </SafeAreaView >
           )

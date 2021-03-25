@@ -13,7 +13,6 @@ import { Ionicons } from '@expo/vector-icons';
 function ProviderComments({ navigation, route }) {
 
      const { item } = route.params
-
      const [isLoading, setLoading] = useState(true);
      const [data, setData] = useState({})
 

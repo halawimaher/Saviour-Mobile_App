@@ -12,13 +12,14 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Linking from 'expo-linking';
+import moment from 'moment';
 
 
 export default function RequestorBookingsList({ navigation }) {
 
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([])
-  const [statusColor, setStatusColor] = useState(null)
+  const [status, setStatus] = useState()
 
   const getData = () => {
     fetch(`http:192.168.1.6:8000/api/providers/${user_id}`, {
@@ -33,14 +34,55 @@ export default function RequestorBookingsList({ navigation }) {
       .catch((error) => console.error(error))
   }
 
+  const declineBooking = async (item) => {
+
+    const editUrl = `http://192.168.1.6:8000/api/bookings/${item.id}`;
+    const editRequestOptions = {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        //Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify({
+        latitude: data.latitude,
+        longitude: data.longitude,
+        provider_id: data.provider_id,
+        requestor_id: data.requestor_id,
+        status: 0
+      }),
+    };
+    const response = await fetch(editUrl, editRequestOptions);
+
+  };
+
+  const acceptBooking = async (item) => {
+
+    const editUrl = `http://192.168.1.6:8000/api/bookings/${item.id}`;
+    const editRequestOptions = {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        //Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify({
+        latitude: data.latitude,
+        longitude: data.longitude,
+        provider_id: data.provider_id,
+        requestor_id: data.requestor_id,
+        status: 2
+      }),
+    };
+    const response = await fetch(editUrl, editRequestOptions);
+    Linking.openURL(`https://maps.google.com/?q=${item.latitude},${item.longitude}`)
+
+  };
+
+
   useEffect(() => {
     getData()
   }, []);
-
-  const clickEventListener = (data) => {
-    // setUserSelected(data)
-    setModalVisible(true)
-  };
 
   return (
     <ScrollView style={{ height: Dimensions.get('window').height, width: Dimensions.get('window').width }}>
@@ -48,13 +90,14 @@ export default function RequestorBookingsList({ navigation }) {
         <Ionicons name="arrow-back-outline" size={46} color='black' onPress={() => navigation.goBack()} />
         <Text style={{ fontSize: 50, textAlign: 'center' }}> <Text style={{ color: '#00C2FF' }}>Your </Text>Requests</Text>
         {isLoading ? <Text>Loading...</Text> :
-          data[0].provider_bookings.map((item, key) =>
+          data[0].provider_bookings.map((item, key) => item.status > 0 &&
             <View key={key} style={styles.userList} >
               <View style={styles.nameGrid}>
                 <Image style={{ width: 50, height: 50, marginRight: 5 }} source={{ uri: 'http://192.168.1.6:8000/storage/' + item.image }} />
                 <View>
-                  <Text style={styles.name}>{item.requestor_id}</Text>
-                  {item.status == 1 ? <Ionicons color='green' name="ellipse"></Ionicons> : <Ionicons color='red' name="ellipse"></Ionicons>}
+                  {/* <Text style={styles.name}>{item.requestor_id}</Text> */}
+                  <Text style={styles.name}>{moment(item.created_at).format('D-MM-YYYY')}</Text>
+                  {item.status == 1 ? <Ionicons color='orange' name="ellipse">Pending</Ionicons> : item.status == 2 ? <Ionicons color='green' name="ellipse">Active</Ionicons> : <Ionicons color='red' name="ellipse">Cancelled</Ionicons>}
                   <Text style={{ color: 'blue' }}
                     onPress={() => Linking.openURL(`https://maps.google.com/?q=${item.latitude},${item.longitude}`)}>
                     View Location in Maps
@@ -66,10 +109,10 @@ export default function RequestorBookingsList({ navigation }) {
                 <TouchableOpacity style={styles.rateButton} onPress={() => navigation.navigate('RequestorPreviewScreen', { item })}>
                   <Text style={styles.followButtonText}>More Details</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.followButton} onPress={() => Linking.openURL(`https://maps.google.com/?q=${item.latitude},${item.longitude}`)}>
+                <TouchableOpacity style={styles.followButton} onPress={() => { acceptBooking(item) }}>
                   <Text style={styles.followButtonText}>Accept</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.followButton} onPress={() => clickEventListener(item.name)}>
+                <TouchableOpacity style={styles.followButton} onPress={() => { declineBooking(item) }}>
                   <Text style={styles.followButtonText}>Decline</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.followButton} onPress={() => navigation.navigate('FeedbackForRequestorsScreen', { item })}>
@@ -77,7 +120,7 @@ export default function RequestorBookingsList({ navigation }) {
                 </TouchableOpacity>
               </View>
             </View>
-          )}
+          ).sort(function (a, b) { return a.created_at - b.created_at })}
       </View>
     </ScrollView>
   );

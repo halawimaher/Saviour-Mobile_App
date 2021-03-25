@@ -37,9 +37,9 @@ export default function ProvidersList({ navigation }) {
     getData()
   }, []);
 
-  const clickEventListener = (data) => {
-    console.log(data)
-  };
+  // const clickEventListener = (data) => {
+  //   console.log(data)
+  // };
 
   return (
     <ScrollView style={{ height: Dimensions.get('window').height, width: Dimensions.get('window').width }}>
@@ -60,13 +60,13 @@ export default function ProvidersList({ navigation }) {
                 <Text key={key} style={styles.services}>{service.service}</Text>
               )} */}
               <View style={styles.buttonGrid}>
-                <TouchableOpacity style={styles.rateButton} onPress={() => clickEventListener(item.id)}>
+                <TouchableOpacity style={styles.rateButton} onPress={() => navigation.navigate('ProviderPreviewScreen', { item })}>
                   <Text style={styles.followButtonText}>More Info</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.followButton} onPress={() => navigation.navigate('Map')}>
+                <TouchableOpacity style={styles.followButton} onPress={() => navigation.navigate('Map', { item })}>
                   <Text style={styles.followButtonText}>Request</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.followButton} onPress={() => navigation.navigate('FeedbackForProvidersScreen')}>
+                <TouchableOpacity style={styles.followButton} onPress={() => navigation.navigate('FeedbackForProvidersScreen', { item })}>
                   <Text style={styles.followButtonText}>Rate</Text>
                 </TouchableOpacity>
               </View>

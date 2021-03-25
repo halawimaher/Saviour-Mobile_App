@@ -4,7 +4,8 @@ import * as Location from 'expo-location';
 import MapView from 'react-native-maps';
 import { NavigationContainer } from '@react-navigation/native';
 
-export default function Map({ navigation }) {
+export default function Map({ navigation, route }) {
+  const { item } = route.params
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const latitudeDelta = 0.093
@@ -21,14 +22,16 @@ export default function Map({ navigation }) {
       body: JSON.stringify({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
-        requestor_id: user_id
+        requestor_id: user_id,
+        provider_id: item.id
       }),
     };
 
     const typeUrl = `http://192.168.1.6:8000/api/bookings`;
     const response = await fetch(typeUrl, typeRequestOptions);
     const result = await response.json();
-    navigation.navigate('BookingConfirmationScreen')
+    alert('Request Sent')
+    navigation.navigate('RequestorActionScreen')
   };
 
   useEffect(() => {
@@ -41,7 +44,6 @@ export default function Map({ navigation }) {
 
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-      console.log(location)
     })();
   }, []);
 
@@ -65,7 +67,7 @@ export default function Map({ navigation }) {
         style={styles.button}
         title="Set Location"
         onPress={AddCoords}
-      ><Text style={styles.buttonText}>Confirm Location</Text></TouchableOpacity>
+      ><Text style={styles.buttonText}>Confirm Booking</Text></TouchableOpacity>
     </View>
   );
 }

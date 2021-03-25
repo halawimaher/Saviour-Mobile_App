@@ -9,6 +9,7 @@ import Constants from 'expo-constants'
 import { AuthContext } from '../components/Context'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
+import { DrawerContentScrollView } from '@react-navigation/drawer';
 
 function ProviderProfile({ navigation }) {
      const [image, setImage] = useState(null)
@@ -24,7 +25,7 @@ function ProviderProfile({ navigation }) {
                },
           })
                .then((response) => response.json())
-               .then((res) => { setData(res[0]), setLoading(false) })
+               .then((res) => { setData(res[0]), setLoading(false), console.log(res) })
                .catch((error) => console.error(error))
      }
 
@@ -109,13 +110,24 @@ function ProviderProfile({ navigation }) {
                                              <Text style={[styles.text, styles.subText]}>Comments</Text>
                                         </View>
                                    </View>
+
+                                   <View style={styles.statsContainer}>
+                                        <View style={styles.statsBox}>
+                                             <Text style={[styles.text, { fontSize: 24 }]}>20000</Text>
+                                             <Text style={[styles.text, styles.subText]}>Rate/Hour</Text>
+                                        </View>
+                                        <View style={[styles.statsBox, { borderColor: "#00C2FF", borderLeftWidth: 1, borderRightWidth: 1 }]}>
+                                             {data.services.map((serv, key) => <Text key={key} style={[styles.servicesText]}>{serv.service}</Text>)}
+                                             <Text style={[styles.text, styles.subText]}>Services</Text>
+                                        </View>
+                                   </View>
                               </>
                          }
-                         <TouchableOpacity
+                         {/* <TouchableOpacity
                               style={styles.button}
-                              onPress={() => navigation.navigate('ProviderComments')}
+                              onPress={() => navigation.navigate('ProviderComments', { item })}
                          ><Text style={styles.buttonText}>View All Feedback</Text>
-                         </TouchableOpacity>
+                         </TouchableOpacity> */}
                     </ScrollView>
                </SafeAreaView>
           )
@@ -149,6 +161,11 @@ const styles = StyleSheet.create({
      text: {
           fontFamily: 'RhodiumLibre_400Regular',
           color: "#52575D"
+     },
+     servicesText: {
+          color: "#52575D",
+          fontSize: 14,
+          fontFamily: 'RhodiumLibre_400Regular',
      },
      image: {
           flex: 1,

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { View, StyleSheet, Text, Platform, StatusBar, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { useFonts, RhodiumLibre_400Regular } from '@expo-google-fonts/rhodium-libre';
 import AppLoading from 'expo-app-loading';
-import Constants from 'expo-constants'
+import logo from '../assets/logo.png';
 import { AuthContext } from '../components/Context'
 
 function ProviderActionScreen({ navigation }) {
@@ -20,7 +20,7 @@ function ProviderActionScreen({ navigation }) {
                <ScrollView style={styles.wrapper}>
                     <View style={styles.welcomeMessage}>
                          <Text style={styles.paragraph}>Hello </Text>
-                         <Text style={styles.logOut} onPress={() => { signOut() }}>Log Out</Text>
+                         <Image style={styles.logo} source={logo} />
                          <StatusBar style='auto' />
                     </View>
                     <View style={styles.buttonGrid}>
@@ -33,6 +33,10 @@ function ProviderActionScreen({ navigation }) {
                               style={styles.button}
                               onPress={() => navigation.navigate('ProviderProfile')}
                          ><Text style={styles.buttonText}>View Your Profile</Text>
+                         </TouchableOpacity>
+                         <TouchableOpacity
+                              style={styles.logOut}
+                         ><Text style={styles.logOutText} onPress={() => { signOut() }}>Log Out</Text>
                          </TouchableOpacity>
                     </View>
                </ScrollView>
@@ -51,10 +55,23 @@ const styles = StyleSheet.create({
           justifyContent: 'space-between',
           fontFamily: 'RhodiumLibre_400Regular',
      },
+     logo: {
+          width: 350,
+          height: 150,
+     },
      logOut: {
-          color: 'red',
+          borderRadius: 40,
+          width: 235,
+          height: 44,
+          backgroundColor: 'red',
+          margin: 5,
+          alignSelf: 'center'
+     },
+     logOutText: {
+          paddingTop: 10,
+          textAlign: 'center',
           fontSize: 16,
-          alignSelf: 'center',
+          color: '#fff',
           fontFamily: 'RhodiumLibre_400Regular'
      },
      paragraph: {

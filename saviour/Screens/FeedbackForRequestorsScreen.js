@@ -49,8 +49,9 @@ function FeedbackForRequestorsScreen({ navigation, route }) {
           const typeUrl = `http://192.168.1.6:8000/api/requestor-feedback`;
           const response = await fetch(typeUrl, typeRequestOptions);
           const result = await response.json();
-          // navigation.navigate('ProvidersList')
-          alert('nice')
+          alert('Thank you! Your feedback has been submitted.')
+          navigation.goBack()
+
      }
 
 

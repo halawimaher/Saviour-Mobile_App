@@ -60,7 +60,7 @@ function ProviderPreviewScreen({ navigation, route }) {
                          </View>
                          <View style={{ alignSelf: "center" }}>
                               <View style={styles.profileImage}>
-                                   {!image ? <Avatar
+                                   {!data.image ? <Avatar
                                         size={200}
                                         icon={{ name: 'user', color: 'grey', type: 'font-awesome' }}
                                         overlayContainerStyle={{ backgroundColor: 'white', borderRadius: 100 }}
@@ -68,7 +68,7 @@ function ProviderPreviewScreen({ navigation, route }) {
                                         containerStyle={{ borderWidth: 5, borderRadius: 100 }}
                                    />
                                         :
-                                        <Image source={{ uri: image }} style={styles.image} />}
+                                        <Image source={{ uri: 'http://192.168.1.6:8000/storage/' + data.image }} style={styles.image} />}
                                    <StatusBar style='auto' />
                               </View>
                          </View>
@@ -156,6 +156,9 @@ const styles = StyleSheet.create({
           color: "#00C2FF",
           textTransform: "uppercase",
           fontWeight: "500"
+     },
+     personalMessage: {
+          textAlign: 'center'
      },
      profileImage: {
           width: 200,

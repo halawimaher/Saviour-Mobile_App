@@ -16,7 +16,6 @@ import { Ionicons } from '@expo/vector-icons';
 export default function ProvidersList({ navigation }) {
 
   const [isLoading, setLoading] = useState(true);
-  const [modalVisible, setModalVisible] = useState(false)
   const [userSelected, setUserSelected] = useState([])
   const [data, setData] = useState([])
 

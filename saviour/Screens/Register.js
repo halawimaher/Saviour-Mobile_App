@@ -16,6 +16,7 @@ export default function Register({ navigation }) {
      const [isRequestor, setRequestor] = useState(false);
      const [isProvider, setProvider] = useState(false);
      const { signUp } = useContext(AuthContext);
+     const { signIn } = useContext(AuthContext)
      const [serverData, setServerData] = useState([]);
      const [selectedValue, setSelectedValue] = useState('')
 
@@ -111,6 +112,7 @@ export default function Register({ navigation }) {
 
      const registerHandle = (name, email, password, city, address, phone, role_id) => {
           signUp(name, email, password, city, address, phone, role_id)
+          signIn(email, password)
      }
 
 
@@ -176,10 +178,10 @@ export default function Register({ navigation }) {
                          />
 
                          <View style={styles.section}>
-                              <Checkbox style={styles.checkbox} id="requestor" name="requestor" value={isRequestor} onValueChange={(val) => { newProvider(val), setRequestor(!isRequestor), setProvider(false) }} />
-                              <Text style={styles.paragraph}>Requestor</Text>
-                              <Checkbox style={styles.checkbox} id="provider" name="provider" value={isProvider} onValueChange={(val) => { newRequestor(val), setProvider(!isProvider), setRequestor(false) }} />
+                              <Checkbox style={styles.checkbox} id="provider" name="provider" value={isRequestor} onValueChange={(val) => { newProvider(val), setRequestor(!isRequestor), setProvider(false) }} />
                               <Text style={styles.paragraph}>Provider</Text>
+                              <Checkbox style={styles.checkbox} id="requestor" name="requestor" value={isProvider} onValueChange={(val) => { newRequestor(val), setProvider(!isProvider), setRequestor(false) }} />
+                              <Text style={styles.paragraph}>Requestor</Text>
                          </View>
 
 

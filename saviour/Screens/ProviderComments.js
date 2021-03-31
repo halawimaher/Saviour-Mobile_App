@@ -13,6 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 function ProviderComments({ navigation, route }) {
 
      const { item } = route.params
+     console.log(item)
      const [isLoading, setLoading] = useState(true);
      const [data, setData] = useState({})
 
@@ -61,10 +62,9 @@ function ProviderComments({ navigation, route }) {
                                         </TouchableOpacity>
                                         {Notification.provider_feedback.map((mes, key) =>
                                              <View key={key} style={styles.feedbackContent}>
-                                                  <Text rkType='primary3 mediumLine'>{mes.feedback}</Text>
-                                                  <Text style={styles.time}>
-                                                       {mes.rating}
-                                                  </Text>
+                                                  <Text style={styles.head}>Anonymous Wrote: </Text>
+                                                  <Text style={styles.comment} rkType='primary3 mediumLine'>{mes.feedback}</Text>
+                                                  <Text style={{ color: '#242424' }}>Rating: <Text style={styles.rating} >{mes.rating}</Text><Text style={{ color: '#242424', fontSize: 18 }}>/5</Text></Text>
                                              </View>
                                         )}
                                    </View>
@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
           alignContent: 'space-between',
           justifyContent: 'space-between',
           padding: 10,
+          fontSize: 18
      },
      content: {
           marginLeft: 16,
@@ -115,12 +116,21 @@ const styles = StyleSheet.create({
           borderRadius: 20,
           marginLeft: 20
      },
-     time: {
-          fontSize: 11,
-          color: "#808080",
+     head: {
+          fontSize: 12,
+          fontFamily: 'RhodiumLibre_400Regular'
+     },
+     rating: {
+          fontSize: 18,
+          color: "#00C2FF",
+          fontFamily: 'RhodiumLibre_400Regular'
+     },
+     comment: {
+          fontSize: 19,
+          fontFamily: 'RhodiumLibre_400Regular'
      },
      name: {
           fontSize: 21,
-          fontWeight: "bold",
+          fontFamily: 'RhodiumLibre_400Regular'
      },
 });

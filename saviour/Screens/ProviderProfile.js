@@ -73,7 +73,7 @@ function ProviderProfile({ navigation }) {
                          </View>
                          <View style={{ alignSelf: "center" }}>
                               <View style={styles.profileImage}>
-                                   {!image ? <Avatar
+                                   {!data.image ? <Avatar
                                         size={200}
                                         icon={{ name: 'user', color: 'grey', type: 'font-awesome' }}
                                         overlayContainerStyle={{ backgroundColor: 'white', borderRadius: 100 }}
@@ -81,7 +81,7 @@ function ProviderProfile({ navigation }) {
                                         containerStyle={{ borderWidth: 5, borderRadius: 100 }}
                                    />
                                         :
-                                        <Image source={{ uri: image }} style={styles.image} />}
+                                        <Image source={{ uri: 'http://192.168.1.6:8000/storage/' + data.image }} style={styles.image} />}
                                    <TouchableOpacity style={styles.imageButton} onPress={PickImage}>
                                         <Ionicons name="camera" size={46} color='orange' />
                                    </TouchableOpacity>
@@ -93,6 +93,7 @@ function ProviderProfile({ navigation }) {
                               <>
                                    <View style={styles.infoContainer}>
                                         <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>{data.name}</Text>
+                                        {data.account_status == 2 && <Ionicons name="shield-checkmark-outline" size={46} color='green' style={{ padding: 10 }} onPress={() => navigation.goBack()} />}
                                         <Text style={[styles.text, { color: "#00C2FF", fontSize: 14 }]}>{data.city}</Text>
 
                                         <View style={{ borderColor: "#00C2FF", borderTopWidth: 1, paddingTop: 2 }}>
@@ -199,6 +200,9 @@ const styles = StyleSheet.create({
           alignSelf: "center",
           alignItems: "center",
           marginTop: 16
+     },
+     personalMessage: {
+          textAlign: 'center'
      },
      statsContainer: {
           flexDirection: "row",

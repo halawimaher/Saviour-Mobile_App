@@ -2,8 +2,14 @@ import React, { useContext, useState } from 'react';
 import { Image, TextInput, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import logo from '../assets/logo.png';
 import { AuthContext } from '../components/Context'
+import { useFonts, RhodiumLibre_400Regular } from '@expo-google-fonts/rhodium-libre';
+import AppLoading from 'expo-app-loading';
 
 export default function Login({ navigation }) {
+
+     let [fontsLoaded] = useFonts({
+          RhodiumLibre_400Regular,
+     });
 
      const [data, setData] = useState({
           userName: '',
@@ -34,35 +40,39 @@ export default function Login({ navigation }) {
           signIn(email, password, role_id)
      }
 
-     return (
-          <View style={styles.container}>
-               <Image style={styles.logo} source={logo} />
-               <Text style={styles.logoText}> <Text style={{ color: '#00C2FF' }}>S</Text>aviour</Text>
-               <TextInput
-                    onChangeText={(val) => emailInputChange(val)}
-                    placeholder={'Email'}
-                    style={styles.input}
-                    autoCapitalize='none'
-               />
-               <View>
+     if (!fontsLoaded) {
+          return <AppLoading />;
+     } else {
+          return (
+               <View style={styles.container}>
+                    <Image style={styles.logo} source={logo} />
+                    <Text style={styles.logoText}> <Text style={{ color: '#00C2FF' }}>S</Text>aviour</Text>
                     <TextInput
-
-                         onChangeText={(val) => passInputChange(val)}
-                         placeholder={'Password'}
-                         secureTextEntry={true}
+                         onChangeText={(val) => emailInputChange(val)}
+                         placeholder={'Email'}
                          style={styles.input}
+                         autoCapitalize='none'
                     />
-                    <Text style={styles.smallText}>Forgot Password?</Text>
-               </View>
-               <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => { loginHandle(data.email, data.password) }}
-               ><Text style={styles.buttonText}>Login</Text>
-               </TouchableOpacity>
+                    <View>
+                         <TextInput
 
-               <Text style={styles.promptText}>Don't Have an Account? <Text style={{ color: '#00C2FF' }} onPress={() => navigation.navigate('Register')}>Sign Up!</Text></Text>
-          </View >
-     );
+                              onChangeText={(val) => passInputChange(val)}
+                              placeholder={'Password'}
+                              secureTextEntry={true}
+                              style={styles.input}
+                         />
+                         {/* <Text style={styles.smallText}>Forgot Password?</Text> */}
+                    </View>
+                    <TouchableOpacity
+                         style={styles.button}
+                         onPress={() => { loginHandle(data.email, data.password) }}
+                    ><Text style={styles.buttonText}>Login</Text>
+                    </TouchableOpacity>
+
+                    <Text style={styles.promptText}>Don't Have an Account? <Text style={{ color: '#00C2FF' }} onPress={() => navigation.navigate('Register')}>Sign Up!</Text></Text>
+               </View >
+          );
+     }
 }
 
 const styles = StyleSheet.create({
@@ -78,6 +88,7 @@ const styles = StyleSheet.create({
      },
      logoText: {
           fontSize: 64,
+          fontFamily: 'RhodiumLibre_400Regular'
      },
      input: {
           width: 250,
@@ -86,7 +97,8 @@ const styles = StyleSheet.create({
           borderWidth: 1,
           borderColor: 'black',
           marginBottom: 10,
-          borderRadius: 40
+          borderRadius: 40,
+          fontFamily: 'RhodiumLibre_400Regular'
      },
      button: {
           borderRadius: 40,
@@ -99,16 +111,18 @@ const styles = StyleSheet.create({
           paddingTop: 10,
           textAlign: 'center',
           fontSize: 16,
-          fontWeight: 'bold',
           color: '#fff',
+          fontFamily: 'RhodiumLibre_400Regular'
      },
      smallText: {
           color: '#00C2FF',
           fontSize: 10,
           alignSelf: 'flex-end',
-          paddingTop: 0
+          paddingTop: 0,
+          fontFamily: 'RhodiumLibre_400Regular'
      },
      promptText: {
           fontSize: 16,
+          fontFamily: 'RhodiumLibre_400Regular'
      }
 });

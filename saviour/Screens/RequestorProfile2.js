@@ -24,7 +24,7 @@ function ProviderProfile({ navigation }) {
                },
           })
                .then((response) => response.json())
-               .then((res) => { setData(res[0]), setLoading(false) })
+               .then((res) => { setData(res[0]), setLoading(false), console.log(data) })
                .catch((error) => console.error(error))
      }
 
@@ -72,7 +72,7 @@ function ProviderProfile({ navigation }) {
                          </View>
                          <View style={{ alignSelf: "center" }}>
                               <View style={styles.profileImage}>
-                                   {!image ? <Avatar
+                                   {!data.image ? <Avatar
                                         size={200}
                                         icon={{ name: 'user', color: 'grey', type: 'font-awesome' }}
                                         overlayContainerStyle={{ backgroundColor: 'white', borderRadius: 100 }}
@@ -80,7 +80,7 @@ function ProviderProfile({ navigation }) {
                                         containerStyle={{ borderWidth: 5, borderRadius: 100 }}
                                    />
                                         :
-                                        <Image source={{ uri: image }} style={styles.image} />}
+                                        <Image source={{ uri: 'http://192.168.1.6:8000/storage/' + data.image }} style={styles.image} />}
                                    <TouchableOpacity style={styles.imageButton} onPress={PickImage}>
                                         <Ionicons name="camera" size={46} color='orange' />
                                    </TouchableOpacity>

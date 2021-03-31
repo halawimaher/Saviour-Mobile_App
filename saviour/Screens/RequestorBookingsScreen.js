@@ -93,7 +93,7 @@ export default function RequestorBookingsList({ navigation }) {
           data[0].provider_bookings.map((item, key) => item.status > 0 &&
             <View key={key} style={styles.userList} >
               <View style={styles.nameGrid}>
-                <Image style={{ width: 50, height: 50, marginRight: 5 }} source={{ uri: 'http://192.168.1.6:8000/storage/' + item.image }} />
+                <Image style={{ width: 50, height: 50, marginRight: 5 }} source={{ uri: 'http://192.168.1.6:8000/storage/' + data.image }} />
                 <View>
                   {/* <Text style={styles.name}>{item.requestor_id}</Text> */}
                   <Text style={styles.name}>{moment(item.created_at).format('D-MM-YYYY')}</Text>

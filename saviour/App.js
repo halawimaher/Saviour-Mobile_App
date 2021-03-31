@@ -20,6 +20,9 @@ import FeedbackForProvidersScreen from './Screens/FeedbackForProvidersScreen'
 import FeedbackForRequestorsScreen from './Screens/FeedbackForRequestorsScreen'
 import ProviderPreviewScreen from './Screens/ProviderPreviewScreen'
 import RequestorPreviewScreen from './Screens/RequestorPreviewScreen'
+import ConfirmationDocSubmission from './Screens/ConfirmationDocSubmission'
+import RequestorEditProfile from './Screens/RequestorEditProfile'
+import ProviderEditProfile from './Screens/ProviderEditProfile'
 import Constants from 'expo-constants'
 import { NavigationContainer, StackActions } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -48,6 +51,8 @@ const ProviderStackScreen = ({ navigation }) => (
     <ProviderStack.Screen name="ProviderComments" component={ProviderComments} />
     <ProviderStack.Screen name="RequestorComments" component={RequestorComments} />
     <ProviderStack.Screen name="RequestorPreviewScreen" component={RequestorPreviewScreen} />
+    <ProviderStack.Screen name="ConfirmationDocSubmission" component={ConfirmationDocSubmission} />
+    <ProviderStack.Screen name="ProviderEditProfile" component={ProviderEditProfile} />
   </ProviderStack.Navigator>
 )
 
@@ -65,6 +70,7 @@ const RequestorStackScreen = ({ navigation }) => (
     <ProviderStack.Screen name="FeedbackForProvidersScreen" component={FeedbackForProvidersScreen} />
     <ProviderStack.Screen name="BookingConfirmationScreen" component={BookingConfirmationScreen} />
     <ProviderStack.Screen name="ProviderPreviewScreen" component={ProviderPreviewScreen} />
+    <ProviderStack.Screen name="RequestorEditProfile" component={RequestorEditProfile} />
   </RequestorStack.Navigator>
 )
 

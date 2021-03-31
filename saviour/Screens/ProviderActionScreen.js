@@ -4,6 +4,7 @@ import { useFonts, RhodiumLibre_400Regular } from '@expo-google-fonts/rhodium-li
 import AppLoading from 'expo-app-loading';
 import logo from '../assets/logo.png';
 import { AuthContext } from '../components/Context'
+import Constants from 'expo-constants'
 
 function ProviderActionScreen({ navigation }) {
 
@@ -14,7 +15,7 @@ function ProviderActionScreen({ navigation }) {
      });
 
      if (!fontsLoaded) {
-          return <AppLoading />;
+          return <AppLoading />
      } else {
           return (
                <ScrollView style={styles.wrapper}>
@@ -35,6 +36,16 @@ function ProviderActionScreen({ navigation }) {
                          ><Text style={styles.buttonText}>View Your Profile</Text>
                          </TouchableOpacity>
                          <TouchableOpacity
+                              style={styles.button}
+                              onPress={() => navigation.navigate('ProviderEditProfile')}
+                         ><Text style={styles.buttonText}>Edit Your Profile</Text>
+                         </TouchableOpacity>
+                         <TouchableOpacity
+                              style={styles.button}
+                              onPress={() => navigation.navigate('ConfirmationDocSubmission')}
+                         ><Text style={styles.buttonText}>Get Verified</Text>
+                         </TouchableOpacity>
+                         <TouchableOpacity
                               style={styles.logOut}
                          ><Text style={styles.logOutText} onPress={() => { signOut() }}>Log Out</Text>
                          </TouchableOpacity>
@@ -46,7 +57,7 @@ function ProviderActionScreen({ navigation }) {
 const styles = StyleSheet.create({
      wrapper: {
           backgroundColor: '#fff',
-          paddingTop: 20,
+
      },
      welcomeMessage: {
           flex: 1,
@@ -90,7 +101,7 @@ const styles = StyleSheet.create({
           flex: 1,
           alignItems: 'center',
           justifyContent: 'center',
-          marginTop: 100
+          marginTop: 80
 
      },
      button: {

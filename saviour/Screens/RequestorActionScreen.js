@@ -34,6 +34,11 @@ function RequestorActionScreen({ navigation }) {
                               onPress={() => navigation.navigate('RequestorProfile2')}
                          ><Text style={styles.buttonText}>View Your Profile</Text>
                          </TouchableOpacity>
+                         <TouchableOpacity
+                              style={styles.button}
+                              onPress={() => navigation.navigate('RequestorEditProfile')}
+                         ><Text style={styles.buttonText}>Edit Your Profile</Text>
+                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity
                          style={styles.logOut}

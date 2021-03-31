@@ -90,6 +90,7 @@ function ProviderProfile({ navigation }) {
                          {isLoading ? <Text>Loading...</Text> :
                               <View style={styles.infoContainer}>
                                    <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>{data.name}</Text>
+                                   <Text style={[styles.text, { color: "#00C2FF", fontSize: 14 }]}>0{data.phone}</Text>
                                    <Text style={[styles.text, { color: "#00C2FF", fontSize: 14 }]}>{data.city}</Text>
 
                                    <View style={{ borderColor: "#00C2FF", borderTopWidth: 1, paddingTop: 2 }}>
